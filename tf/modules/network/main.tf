@@ -45,3 +45,10 @@ resource "aws_route_table" "private" {
     Name = "${var.prefix_name}-private-route-table"
   }
 }
+
+
+resource "aws_route" "route_internet" {
+  route_table_id         = aws_route_table.public
+  destination_cidr_block = "0.0.0.0"
+  gateway_id             = aws_internet_gateway.main.id
+}
