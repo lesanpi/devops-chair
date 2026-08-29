@@ -17,6 +17,8 @@ resource "aws_security_group_rule" "worker_ingress" {
   security_group_id = aws_security_group.worker.id
   to_port           = 32767
   type              = "ingress"
+  cidr_blocks       = [var.vpc_cidr]
+
 }
 
 resource "aws_security_group_rule" "control_plane_ingress" {
@@ -25,12 +27,14 @@ resource "aws_security_group_rule" "control_plane_ingress" {
   security_group_id = aws_security_group.control_plane.id
   to_port           = 6443
   type              = "ingress"
+  cidr_blocks       = [var.vpc_cidr]
 }
 resource "aws_security_group_rule" "worker_egress" {
   from_port         = 0
   protocol          = "tcp"
   security_group_id = aws_security_group.worker.id
   to_port           = 0
+  cidr_blocks       = ["0.0.0.0/0"]
   type              = "egress"
 }
 
@@ -39,6 +43,7 @@ resource "aws_security_group_rule" "control_plane_egress" {
   protocol          = "tcp"
   security_group_id = aws_security_group.control_plane.id
   to_port           = 0
+  cidr_blocks       = ["0.0.0.0/0"]
   type              = "egress"
 }
 
