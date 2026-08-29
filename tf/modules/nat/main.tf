@@ -26,11 +26,11 @@ resource "aws_security_group" "nat" {
 }
 
 resource "aws_instance" "nat" {
-  ami               = data.aws_ami.nat_ami.id
-  instance_type     = var.instance_type
-  subnet_id         = var.subnet_id
-  security_groups   = [aws_security_group.nat.id]
-  source_dest_check = false
+  ami                    = data.aws_ami.nat_ami.id
+  instance_type          = var.instance_type
+  subnet_id              = var.subnet_id
+  vpc_security_group_ids = [aws_security_group.nat.id]
+  source_dest_check      = false
   tags = {
     Name = "${var.prefix_name}-nat-instance"
     Role = "nat"
