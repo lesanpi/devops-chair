@@ -23,3 +23,8 @@ variable "private_route_table_id" {
   description = "The ID of the private route table to use for the NAT instance"
   type        = string
 }
+
+variable "iam_instance_profile_name" {
+  description = "The name of the IAM instance profile"
+  type        = strin
+}

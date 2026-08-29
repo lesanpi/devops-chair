@@ -9,11 +9,12 @@ module "network" {
 }
 
 module "nat" {
-  source                 = "./modules/nat"
-  prefix_name            = "devops-chair"
-  vpc_id                 = module.network.vpc_id
-  subnet_id              = module.network.public_subnet_ids[0]
-  private_route_table_id = module.network.private_route_table_id
+  source                    = "./modules/nat"
+  prefix_name               = "devops-chair"
+  vpc_id                    = module.network.vpc_id
+  subnet_id                 = module.network.public_subnet_ids[0]
+  private_route_table_id    = module.network.private_route_table_id
+  iam_instance_profile_name = module.security.ssm_instance_profile_name
 }
 
 module "security" {

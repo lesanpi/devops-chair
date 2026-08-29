@@ -34,6 +34,7 @@ resource "aws_instance" "nat" {
   tags = {
     Name = "${var.prefix_name}-nat-instance"
   }
+  iam_instance_profile = var.iam_instance_profile_name
 }
 
 resource "aws_eip" "nat" {
