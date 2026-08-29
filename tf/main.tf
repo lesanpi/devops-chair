@@ -14,6 +14,7 @@ module "nat" {
   vpc_id                    = module.network.vpc_id
   subnet_id                 = module.network.public_subnet_ids[0]
   private_route_table_id    = module.network.private_route_table_id
+  private_subnets_id        = [module.network.private_subnet_ids]
   iam_instance_profile_name = module.security.ssm_instance_profile_name
 }
 

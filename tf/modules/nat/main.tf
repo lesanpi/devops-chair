@@ -52,3 +52,9 @@ resource "aws_route" "private_nat_route" {
   destination_cidr_block = "0.0.0.0/0"
   network_interface_id   = aws_instance.nat.primary_network_interface_id
 }
+
+resource "aws_route_table_association" "private" {
+  count          = length(var.private_subnets_id)
+  route_table_id = var.private_route_table_id
+  subnet_id      = private_subnets[count.index]
+}

@@ -28,3 +28,8 @@ variable "iam_instance_profile_name" {
   description = "The name of the IAM instance profile"
   type        = string
 }
+
+variable "private_subnets_id" {
+  description = "Private subnets ids"
+  type        = list(string)
+}
