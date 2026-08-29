@@ -39,7 +39,8 @@ resource "aws_instance" "nat" {
 }
 
 resource "aws_eip" "nat" {
-  domain = "vpc"
+  domain   = "vpc"
+  instance = aws_instance.nat.id
   tags = {
     Name = "${var.prefix_name}-nat-eip"
   }
