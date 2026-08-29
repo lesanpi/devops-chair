@@ -47,3 +47,8 @@ module "workers" {
   security_group_id         = module.security.worker_sg_id
   subnet_id                 = module.network.private_subnet_ids[1]
 }
+
+resource "aws_s3_bucket" "ssm_transfers" {
+  bucket        = "devops-chair-ssm-transfers"
+  force_destroy = true
+}
