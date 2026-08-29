@@ -1,0 +1,4 @@
+---
+# handlers file for roles/nat_setup
+- name: Save iptables rules
+  ansible.builtin.command: /usr/libexec/iptables/iptables.init save

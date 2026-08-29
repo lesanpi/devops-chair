@@ -1,0 +1,30 @@
+---
+# tasks file for roles/nat_setup
+
+- name: Enable IP Forwarding
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: true
+    state: present
+    reload: true
+
+- name: Install iptables service
+  ansible.builtin.dnf:
+    name: iptables-services
+    state: present
+
+- name: Make sure iptables service is active
+  ansible.builtin.systemd:
+    name: iptables
+    enabled: true
+    state: started
+
+- name: Enable Masquerade
+  ansible.builtin.iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: ens5
+    jump: MASQUERADE
+    state: present
+  notify: Save iptables rules

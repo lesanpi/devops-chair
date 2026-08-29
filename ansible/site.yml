@@ -1,0 +1,29 @@
+---
+# Phase 1: Network and outbound
+- name: 'Phase 1: Network and Internet'
+  hosts: role_nats
+  become: true
+  roles:
+    - nat_setup
+
+# Phase 2: Setup OS for K8S
+- name: 'Phase 2: Setup OS for K8S'
+  hosts: role_worker, role_control_plane
+  become: true
+  roles:
+    - containerd
+    - k8s_base
+
+# Phase 3: Brain (Control Plane)
+- name: 'Phase 3: Setup Brain'
+  hosts: role_control_plane
+  become: true
+  roles:
+    - control_plane
+
+# Phase 4: Workers
+- name: 'Phase 4: Workers'
+  hosts: role_worker
+  become: true
+  roles:
+    - worker

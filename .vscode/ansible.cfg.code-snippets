@@ -1,0 +1,1670 @@
+{
+  "section-colors": {
+    "prefix": "[colors]",
+    "body": [
+      "[colors]",
+      "$0"
+    ],
+    "description": "Ansible config section [colors]",
+    "scope": "ini"
+  },
+  "section-defaults": {
+    "prefix": "[defaults]",
+    "body": [
+      "[defaults]",
+      "$0"
+    ],
+    "description": "Ansible config section [defaults]",
+    "scope": "ini"
+  },
+  "section-diff": {
+    "prefix": "[diff]",
+    "body": [
+      "[diff]",
+      "$0"
+    ],
+    "description": "Ansible config section [diff]",
+    "scope": "ini"
+  },
+  "section-galaxy": {
+    "prefix": "[galaxy]",
+    "body": [
+      "[galaxy]",
+      "$0"
+    ],
+    "description": "Ansible config section [galaxy]",
+    "scope": "ini"
+  },
+  "section-inventory": {
+    "prefix": "[inventory]",
+    "body": [
+      "[inventory]",
+      "$0"
+    ],
+    "description": "Ansible config section [inventory]",
+    "scope": "ini"
+  },
+  "section-jinja2": {
+    "prefix": "[jinja2]",
+    "body": [
+      "[jinja2]",
+      "$0"
+    ],
+    "description": "Ansible config section [jinja2]",
+    "scope": "ini"
+  },
+  "section-netconf_connection": {
+    "prefix": "[netconf_connection]",
+    "body": [
+      "[netconf_connection]",
+      "$0"
+    ],
+    "description": "Ansible config section [netconf_connection]",
+    "scope": "ini"
+  },
+  "section-paramiko_connection": {
+    "prefix": "[paramiko_connection]",
+    "body": [
+      "[paramiko_connection]",
+      "$0"
+    ],
+    "description": "Ansible config section [paramiko_connection]",
+    "scope": "ini"
+  },
+  "section-persistent_connection": {
+    "prefix": "[persistent_connection]",
+    "body": [
+      "[persistent_connection]",
+      "$0"
+    ],
+    "description": "Ansible config section [persistent_connection]",
+    "scope": "ini"
+  },
+  "section-privilege_escalation": {
+    "prefix": "[privilege_escalation]",
+    "body": [
+      "[privilege_escalation]",
+      "$0"
+    ],
+    "description": "Ansible config section [privilege_escalation]",
+    "scope": "ini"
+  },
+  "section-selinux": {
+    "prefix": "[selinux]",
+    "body": [
+      "[selinux]",
+      "$0"
+    ],
+    "description": "Ansible config section [selinux]",
+    "scope": "ini"
+  },
+  "section-tags": {
+    "prefix": "[tags]",
+    "body": [
+      "[tags]",
+      "$0"
+    ],
+    "description": "Ansible config section [tags]",
+    "scope": "ini"
+  },
+  "defaults-action_warnings": {
+    "prefix": "action_warnings",
+    "body": [
+      "action_warnings = ${1:true}"
+    ],
+    "description": "[defaults] By default, Ansible will issue a warning when received from a task action (module or action plugin). These warnings can ...",
+    "scope": "ini"
+  },
+  "privilege_escalation-agnostic_become_prompt": {
+    "prefix": "agnostic_become_prompt",
+    "body": [
+      "agnostic_become_prompt = ${1:true}"
+    ],
+    "description": "[privilege_escalation] Display an agnostic become prompt instead of displaying a prompt containing the command line supplied become method.",
+    "scope": "ini"
+  },
+  "persistent_connection-ansible_connection_path": {
+    "prefix": "ansible_connection_path",
+    "body": [
+      "ansible_connection_path = $1"
+    ],
+    "description": "[persistent_connection] Specify where to look for the ansible-connection script. This location will be checked before searching $PATH. If null, ...",
+    "scope": "ini"
+  },
+  "defaults-cowsay_enabled_stencils": {
+    "prefix": "cowsay_enabled_stencils",
+    "body": [
+      "cowsay_enabled_stencils = $1"
+    ],
+    "description": "[defaults] Accept a list of cowsay templates that are 'safe' to use, set to an empty list if you want to enable all installed templ...",
+    "scope": "ini"
+  },
+  "defaults-cowpath": {
+    "prefix": "cowpath",
+    "body": [
+      "cowpath = $1"
+    ],
+    "description": "[defaults] Specify a custom cowsay path or swap in your cowsay implementation of choice.",
+    "scope": "ini"
+  },
+  "defaults-cow_selection": {
+    "prefix": "cow_selection",
+    "body": [
+      "cow_selection = ${1:default}"
+    ],
+    "description": "[defaults] This allows you to choose a specific cowsay stencil for the banners or use 'random' to cycle through them.",
+    "scope": "ini"
+  },
+  "defaults-force_color": {
+    "prefix": "force_color",
+    "body": [
+      "force_color = ${1:false}"
+    ],
+    "description": "[defaults] This option forces color mode even when running without a TTY or the \"nocolor\" setting is True.",
+    "scope": "ini"
+  },
+  "defaults-home": {
+    "prefix": "home",
+    "body": [
+      "home = ${1:~/.ansible}"
+    ],
+    "description": "[defaults] The default root path for Ansible config files on the controller.",
+    "scope": "ini"
+  },
+  "defaults-nocolor": {
+    "prefix": "nocolor",
+    "body": [
+      "nocolor = ${1:false}"
+    ],
+    "description": "[defaults] This setting allows suppressing colorizing output, which is used to give a better indication of failure and status infor...",
+    "scope": "ini"
+  },
+  "defaults-nocows": {
+    "prefix": "nocows",
+    "body": [
+      "nocows = ${1:false}"
+    ],
+    "description": "[defaults] If you have cowsay installed but want to avoid the 'cows' (why????), use this.",
+    "scope": "ini"
+  },
+  "defaults-pipelining": {
+    "prefix": "pipelining",
+    "body": [
+      "pipelining = ${1:false}"
+    ],
+    "description": "[defaults] This is a global option, each connection plugin can override either by having more specific options or not supporting pi...",
+    "scope": "ini"
+  },
+  "defaults-any_errors_fatal": {
+    "prefix": "any_errors_fatal",
+    "body": [
+      "any_errors_fatal = ${1:false}"
+    ],
+    "description": "[defaults] Sets the default value for the any_errors_fatal keyword, if True, Task failures will be considered fatal errors.",
+    "scope": "ini"
+  },
+  "privilege_escalation-become_allow_same_user": {
+    "prefix": "become_allow_same_user",
+    "body": [
+      "become_allow_same_user = ${1:false}"
+    ],
+    "description": "[privilege_escalation] When ``False``(default), Ansible will skip using become if the remote user is the same as the become user, as this is no...",
+    "scope": "ini"
+  },
+  "defaults-become_password_file": {
+    "prefix": "become_password_file",
+    "body": [
+      "become_password_file = $1"
+    ],
+    "description": "[defaults] The password file to use for the become plugin. ``--become-password-file``. If executable, it will be run and the result...",
+    "scope": "ini"
+  },
+  "defaults-become_plugins": {
+    "prefix": "become_plugins",
+    "body": [
+      "become_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/become:/usr/share/ansible/plugins/become\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Become Plugins.",
+    "scope": "ini"
+  },
+  "defaults-fact_caching": {
+    "prefix": "fact_caching",
+    "body": [
+      "fact_caching = ${1:memory}"
+    ],
+    "description": "[defaults] Chooses which cache plugin to use, the default 'memory' is ephemeral.",
+    "scope": "ini"
+  },
+  "defaults-fact_caching_connection": {
+    "prefix": "fact_caching_connection",
+    "body": [
+      "fact_caching_connection = $1"
+    ],
+    "description": "[defaults] Defines connection or path information for the cache plugin.",
+    "scope": "ini"
+  },
+  "defaults-fact_caching_prefix": {
+    "prefix": "fact_caching_prefix",
+    "body": [
+      "fact_caching_prefix = ${1:ansible_facts}"
+    ],
+    "description": "[defaults] Prefix to use for cache plugin files/tables.",
+    "scope": "ini"
+  },
+  "defaults-fact_caching_timeout": {
+    "prefix": "fact_caching_timeout",
+    "body": [
+      "fact_caching_timeout = ${1:86400}"
+    ],
+    "description": "[defaults] Expiration timeout for the cache plugin data.",
+    "scope": "ini"
+  },
+  "defaults-callbacks_enabled": {
+    "prefix": "callbacks_enabled",
+    "body": [
+      "callbacks_enabled = $1"
+    ],
+    "description": "[defaults] List of enabled callbacks, not all callbacks need enabling, but many of those shipped with Ansible do as we don't want t...",
+    "scope": "ini"
+  },
+  "defaults-collections_on_ansible_version_mismatch": {
+    "prefix": "collections_on_ansible_version_mismatch",
+    "body": [
+      "collections_on_ansible_version_mismatch = ${1:warning}"
+    ],
+    "description": "[defaults] When a collection is loaded that does not support the running Ansible version (with the collection metadata key `require...",
+    "scope": "ini"
+  },
+  "defaults-collections_paths": {
+    "prefix": "collections_paths",
+    "body": [
+      "collections_paths = ${1:{{ ANSIBLE_HOME ~ \"/collections:/usr/share/ansible/collections\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for collections content. Collections must be in nested *subdirectorie...",
+    "scope": "ini"
+  },
+  "defaults-collections_scan_sys_path": {
+    "prefix": "collections_scan_sys_path",
+    "body": [
+      "collections_scan_sys_path = ${1:true}"
+    ],
+    "description": "[defaults] A boolean to enable or disable scanning the sys.path for installed collections.",
+    "scope": "ini"
+  },
+  "colors-changed": {
+    "prefix": "changed",
+    "body": [
+      "changed = ${1:yellow}"
+    ],
+    "description": "[colors] Defines the color to use on 'Changed' task status.",
+    "scope": "ini"
+  },
+  "colors-console_prompt": {
+    "prefix": "console_prompt",
+    "body": [
+      "console_prompt = ${1:white}"
+    ],
+    "description": "[colors] Defines the default color to use for ansible-console.",
+    "scope": "ini"
+  },
+  "colors-debug": {
+    "prefix": "debug",
+    "body": [
+      "debug = ${1:dark gray}"
+    ],
+    "description": "[colors] Defines the color to use when emitting debug messages.",
+    "scope": "ini"
+  },
+  "colors-deprecate": {
+    "prefix": "deprecate",
+    "body": [
+      "deprecate = ${1:purple}"
+    ],
+    "description": "[colors] Defines the color to use when emitting deprecation messages.",
+    "scope": "ini"
+  },
+  "colors-diff_add": {
+    "prefix": "diff_add",
+    "body": [
+      "diff_add = ${1:green}"
+    ],
+    "description": "[colors] Defines the color to use when showing added lines in diffs.",
+    "scope": "ini"
+  },
+  "colors-diff_lines": {
+    "prefix": "diff_lines",
+    "body": [
+      "diff_lines = ${1:cyan}"
+    ],
+    "description": "[colors] Defines the color to use when showing diffs.",
+    "scope": "ini"
+  },
+  "colors-diff_remove": {
+    "prefix": "diff_remove",
+    "body": [
+      "diff_remove = ${1:red}"
+    ],
+    "description": "[colors] Defines the color to use when showing removed lines in diffs.",
+    "scope": "ini"
+  },
+  "colors-error": {
+    "prefix": "error",
+    "body": [
+      "error = ${1:red}"
+    ],
+    "description": "[colors] Defines the color to use when emitting error messages.",
+    "scope": "ini"
+  },
+  "colors-highlight": {
+    "prefix": "highlight",
+    "body": [
+      "highlight = ${1:white}"
+    ],
+    "description": "[colors] Defines the color to use for highlighting.",
+    "scope": "ini"
+  },
+  "colors-ok": {
+    "prefix": "ok",
+    "body": [
+      "ok = ${1:green}"
+    ],
+    "description": "[colors] Defines the color to use when showing 'OK' task status.",
+    "scope": "ini"
+  },
+  "colors-skip": {
+    "prefix": "skip",
+    "body": [
+      "skip = ${1:cyan}"
+    ],
+    "description": "[colors] Defines the color to use when showing 'Skipped' task status.",
+    "scope": "ini"
+  },
+  "colors-unreachable": {
+    "prefix": "unreachable",
+    "body": [
+      "unreachable = ${1:bright red}"
+    ],
+    "description": "[colors] Defines the color to use on 'Unreachable' status.",
+    "scope": "ini"
+  },
+  "colors-verbose": {
+    "prefix": "verbose",
+    "body": [
+      "verbose = ${1:blue}"
+    ],
+    "description": "[colors] Defines the color to use when emitting verbose messages. In other words, those that show with '-v's.",
+    "scope": "ini"
+  },
+  "colors-warn": {
+    "prefix": "warn",
+    "body": [
+      "warn = ${1:bright purple}"
+    ],
+    "description": "[colors] Defines the color to use when emitting warning messages.",
+    "scope": "ini"
+  },
+  "defaults-connection_password_file": {
+    "prefix": "connection_password_file",
+    "body": [
+      "connection_password_file = $1"
+    ],
+    "description": "[defaults] The password file to use for the connection plugin. ``--connection-password-file``.",
+    "scope": "ini"
+  },
+  "defaults-action_plugins": {
+    "prefix": "action_plugins",
+    "body": [
+      "action_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/action:/usr/share/ansible/plugins/action\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Action Plugins.",
+    "scope": "ini"
+  },
+  "defaults-allow_unsafe_lookups": {
+    "prefix": "allow_unsafe_lookups",
+    "body": [
+      "allow_unsafe_lookups = ${1:false}"
+    ],
+    "description": "[defaults] When enabled, this option allows lookup plugins (whether used in variables as ``{{lookup('foo')}}`` or as a loop as with...",
+    "scope": "ini"
+  },
+  "defaults-ask_pass": {
+    "prefix": "ask_pass",
+    "body": [
+      "ask_pass = ${1:false}"
+    ],
+    "description": "[defaults] This controls whether an Ansible playbook should prompt for a login password. If using SSH keys for authentication, you ...",
+    "scope": "ini"
+  },
+  "defaults-ask_vault_pass": {
+    "prefix": "ask_vault_pass",
+    "body": [
+      "ask_vault_pass = ${1:false}"
+    ],
+    "description": "[defaults] This controls whether an Ansible playbook should prompt for a vault password.",
+    "scope": "ini"
+  },
+  "privilege_escalation-become": {
+    "prefix": "become",
+    "body": [
+      "become = ${1:false}"
+    ],
+    "description": "[privilege_escalation] Toggles the use of privilege escalation, allowing you to 'become' another user after login.",
+    "scope": "ini"
+  },
+  "privilege_escalation-become_ask_pass": {
+    "prefix": "become_ask_pass",
+    "body": [
+      "become_ask_pass = ${1:false}"
+    ],
+    "description": "[privilege_escalation] Toggle to prompt for privilege escalation password.",
+    "scope": "ini"
+  },
+  "privilege_escalation-become_exe": {
+    "prefix": "become_exe",
+    "body": [
+      "become_exe = $1"
+    ],
+    "description": "[privilege_escalation] executable to use for privilege escalation, otherwise Ansible will depend on PATH.",
+    "scope": "ini"
+  },
+  "privilege_escalation-become_flags": {
+    "prefix": "become_flags",
+    "body": [
+      "become_flags = $1"
+    ],
+    "description": "[privilege_escalation] Flags to pass to the privilege escalation executable.",
+    "scope": "ini"
+  },
+  "privilege_escalation-become_method": {
+    "prefix": "become_method",
+    "body": [
+      "become_method = ${1:sudo}"
+    ],
+    "description": "[privilege_escalation] Privilege escalation method to use when `become` is enabled.",
+    "scope": "ini"
+  },
+  "privilege_escalation-become_user": {
+    "prefix": "become_user",
+    "body": [
+      "become_user = ${1:root}"
+    ],
+    "description": "[privilege_escalation] The user your login/remote user 'becomes' when using privilege escalation, most systems will use 'root' when no user is ...",
+    "scope": "ini"
+  },
+  "defaults-cache_plugins": {
+    "prefix": "cache_plugins",
+    "body": [
+      "cache_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/cache:/usr/share/ansible/plugins/cache\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Cache Plugins.",
+    "scope": "ini"
+  },
+  "defaults-callback_plugins": {
+    "prefix": "callback_plugins",
+    "body": [
+      "callback_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/callback:/usr/share/ansible/plugins/callback\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Callback Plugins.",
+    "scope": "ini"
+  },
+  "defaults-cliconf_plugins": {
+    "prefix": "cliconf_plugins",
+    "body": [
+      "cliconf_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/cliconf:/usr/share/ansible/plugins/cliconf\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Cliconf Plugins.",
+    "scope": "ini"
+  },
+  "defaults-connection_plugins": {
+    "prefix": "connection_plugins",
+    "body": [
+      "connection_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/connection:/usr/share/ansible/plugins/connection\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Connection Plugins.",
+    "scope": "ini"
+  },
+  "defaults-debug": {
+    "prefix": "debug",
+    "body": [
+      "debug = ${1:false}"
+    ],
+    "description": "[defaults] Toggles debug output in Ansible. This is *very* verbose and can hinder multiprocessing. Debug output can also include se...",
+    "scope": "ini"
+  },
+  "defaults-executable": {
+    "prefix": "executable",
+    "body": [
+      "executable = ${1:/bin/sh}"
+    ],
+    "description": "[defaults] This indicates the command to use to spawn a shell under, which is required for Ansible's execution needs on a target. U...",
+    "scope": "ini"
+  },
+  "defaults-fact_path": {
+    "prefix": "fact_path",
+    "body": [
+      "fact_path = $1"
+    ],
+    "description": "[defaults] This option allows you to globally configure a custom path for 'local_facts' for the implied :ref:`ansible_collections.a...",
+    "scope": "ini"
+  },
+  "defaults-filter_plugins": {
+    "prefix": "filter_plugins",
+    "body": [
+      "filter_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/filter:/usr/share/ansible/plugins/filter\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Jinja2 Filter Plugins.",
+    "scope": "ini"
+  },
+  "defaults-force_handlers": {
+    "prefix": "force_handlers",
+    "body": [
+      "force_handlers = ${1:false}"
+    ],
+    "description": "[defaults] This option controls if notified handlers run on a host even if a failure occurs on that host. When false, the handlers ...",
+    "scope": "ini"
+  },
+  "defaults-forks": {
+    "prefix": "forks",
+    "body": [
+      "forks = ${1:5}"
+    ],
+    "description": "[defaults] Maximum number of forks Ansible will use to execute tasks on target hosts.",
+    "scope": "ini"
+  },
+  "defaults-gathering": {
+    "prefix": "gathering",
+    "body": [
+      "gathering = ${1:implicit}"
+    ],
+    "description": "[defaults] This setting controls the default policy of fact gathering (facts discovered about remote systems). This option can be u...",
+    "scope": "ini"
+  },
+  "defaults-gather_subset": {
+    "prefix": "gather_subset",
+    "body": [
+      "gather_subset = $1"
+    ],
+    "description": "[defaults] Set the `gather_subset` option for the :ref:`ansible_collections.ansible.builtin.setup_module` task in the implicit fact...",
+    "scope": "ini"
+  },
+  "defaults-gather_timeout": {
+    "prefix": "gather_timeout",
+    "body": [
+      "gather_timeout = $1"
+    ],
+    "description": "[defaults] Set the timeout in seconds for the implicit fact gathering, see the module documentation for specifics. It does **not** ...",
+    "scope": "ini"
+  },
+  "defaults-hash_behaviour": {
+    "prefix": "hash_behaviour",
+    "body": [
+      "hash_behaviour = ${1:replace}"
+    ],
+    "description": "[defaults] This setting controls how duplicate definitions of dictionary variables (aka hash, map, associative array) are handled i...",
+    "scope": "ini"
+  },
+  "defaults-inventory": {
+    "prefix": "inventory",
+    "body": [
+      "inventory = ${1:/etc/ansible/hosts}"
+    ],
+    "description": "[defaults] Comma-separated list of Ansible inventory sources",
+    "scope": "ini"
+  },
+  "defaults-httpapi_plugins": {
+    "prefix": "httpapi_plugins",
+    "body": [
+      "httpapi_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/httpapi:/usr/share/ansible/plugins/httpapi\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for HttpApi Plugins.",
+    "scope": "ini"
+  },
+  "defaults-internal_poll_interval": {
+    "prefix": "internal_poll_interval",
+    "body": [
+      "internal_poll_interval = ${1:0.001}"
+    ],
+    "description": "[defaults] This sets the interval (in seconds) of Ansible internal processes polling each other. Lower values improve performance w...",
+    "scope": "ini"
+  },
+  "defaults-inventory_plugins": {
+    "prefix": "inventory_plugins",
+    "body": [
+      "inventory_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/inventory:/usr/share/ansible/plugins/inventory\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Inventory Plugins.",
+    "scope": "ini"
+  },
+  "defaults-jinja2_extensions": {
+    "prefix": "jinja2_extensions",
+    "body": [
+      "jinja2_extensions = $1"
+    ],
+    "description": "[defaults] This is a developer-specific feature that allows enabling additional Jinja2 extensions. See the Jinja2 documentation for...",
+    "scope": "ini"
+  },
+  "defaults-jinja2_native": {
+    "prefix": "jinja2_native",
+    "body": [
+      "jinja2_native = ${1:false}"
+    ],
+    "description": "[defaults] This option preserves variable types during template operations.",
+    "scope": "ini"
+  },
+  "defaults-keep_remote_files": {
+    "prefix": "keep_remote_files",
+    "body": [
+      "keep_remote_files = ${1:false}"
+    ],
+    "description": "[defaults] Enables/disables the cleaning up of the temporary files Ansible used to execute the tasks on the remote. If this option ...",
+    "scope": "ini"
+  },
+  "selinux-libvirt_lxc_noseclabel": {
+    "prefix": "libvirt_lxc_noseclabel",
+    "body": [
+      "libvirt_lxc_noseclabel = ${1:false}"
+    ],
+    "description": "[selinux] This setting causes libvirt to connect to LXC containers by passing ``--noseclabel`` parameter to ``virsh`` command. Thi...",
+    "scope": "ini"
+  },
+  "defaults-bin_ansible_callbacks": {
+    "prefix": "bin_ansible_callbacks",
+    "body": [
+      "bin_ansible_callbacks = ${1:false}"
+    ],
+    "description": "[defaults] Controls whether callback plugins are loaded when running /usr/bin/ansible. This may be used to log activity from the co...",
+    "scope": "ini"
+  },
+  "defaults-local_tmp": {
+    "prefix": "local_tmp",
+    "body": [
+      "local_tmp = ${1:{{ ANSIBLE_HOME ~ \"/tmp\" }}}"
+    ],
+    "description": "[defaults] Temporary directory for Ansible to use on the controller.",
+    "scope": "ini"
+  },
+  "defaults-log_filter": {
+    "prefix": "log_filter",
+    "body": [
+      "log_filter = $1"
+    ],
+    "description": "[defaults] List of logger names to filter out of the log file.",
+    "scope": "ini"
+  },
+  "defaults-log_path": {
+    "prefix": "log_path",
+    "body": [
+      "log_path = $1"
+    ],
+    "description": "[defaults] File to which Ansible will log on the controller. When empty logging is disabled.",
+    "scope": "ini"
+  },
+  "defaults-lookup_plugins": {
+    "prefix": "lookup_plugins",
+    "body": [
+      "lookup_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/lookup:/usr/share/ansible/plugins/lookup\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Lookup Plugins.",
+    "scope": "ini"
+  },
+  "defaults-ansible_managed": {
+    "prefix": "ansible_managed",
+    "body": [
+      "ansible_managed = ${1:Ansible managed}"
+    ],
+    "description": "[defaults] Sets the macro for the 'ansible_managed' variable available for :ref:`ansible_collections.ansible.builtin.template_modul...",
+    "scope": "ini"
+  },
+  "defaults-module_args": {
+    "prefix": "module_args",
+    "body": [
+      "module_args = $1"
+    ],
+    "description": "[defaults] This sets the default arguments to pass to the ``ansible`` adhoc binary if no ``-a`` is specified.",
+    "scope": "ini"
+  },
+  "defaults-module_compression": {
+    "prefix": "module_compression",
+    "body": [
+      "module_compression = ${1:ZIP_DEFLATED}"
+    ],
+    "description": "[defaults] Compression scheme to use when transferring Python modules to the target.",
+    "scope": "ini"
+  },
+  "defaults-module_name": {
+    "prefix": "module_name",
+    "body": [
+      "module_name = ${1:command}"
+    ],
+    "description": "[defaults] Module to use with the ``ansible`` AdHoc command, if none is specified via ``-m``.",
+    "scope": "ini"
+  },
+  "defaults-library": {
+    "prefix": "library",
+    "body": [
+      "library = ${1:{{ ANSIBLE_HOME ~ \"/plugins/modules:/usr/share/ansible/plugins/modules\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Modules.",
+    "scope": "ini"
+  },
+  "defaults-module_utils": {
+    "prefix": "module_utils",
+    "body": [
+      "module_utils = ${1:{{ ANSIBLE_HOME ~ \"/plugins/module_utils:/usr/share/ansible/plugins/module_utils\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Module utils files, which are shared by modules.",
+    "scope": "ini"
+  },
+  "defaults-netconf_plugins": {
+    "prefix": "netconf_plugins",
+    "body": [
+      "netconf_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/netconf:/usr/share/ansible/plugins/netconf\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Netconf Plugins.",
+    "scope": "ini"
+  },
+  "defaults-no_log": {
+    "prefix": "no_log",
+    "body": [
+      "no_log = ${1:false}"
+    ],
+    "description": "[defaults] Toggle Ansible's display and logging of task details, mainly used to avoid security disclosures.",
+    "scope": "ini"
+  },
+  "defaults-no_target_syslog": {
+    "prefix": "no_target_syslog",
+    "body": [
+      "no_target_syslog = ${1:false}"
+    ],
+    "description": "[defaults] Toggle Ansible logging to syslog on the target when it executes tasks. On Windows hosts, this will disable a newer style...",
+    "scope": "ini"
+  },
+  "defaults-null_representation": {
+    "prefix": "null_representation",
+    "body": [
+      "null_representation = $1"
+    ],
+    "description": "[defaults] What templating should return as a 'null' value. When not set it will let Jinja2 decide.",
+    "scope": "ini"
+  },
+  "defaults-poll_interval": {
+    "prefix": "poll_interval",
+    "body": [
+      "poll_interval = ${1:15}"
+    ],
+    "description": "[defaults] For asynchronous tasks in Ansible (covered in Asynchronous Actions and Polling), this is how often to check back on the ...",
+    "scope": "ini"
+  },
+  "defaults-private_key_file": {
+    "prefix": "private_key_file",
+    "body": [
+      "private_key_file = $1"
+    ],
+    "description": "[defaults] Option for connections using a certificate or key file to authenticate, rather than an agent or passwords, you can set t...",
+    "scope": "ini"
+  },
+  "defaults-private_role_vars": {
+    "prefix": "private_role_vars",
+    "body": [
+      "private_role_vars = ${1:false}"
+    ],
+    "description": "[defaults] By default, imported roles publish their variables to the play and other roles, this setting can avoid that. This was in...",
+    "scope": "ini"
+  },
+  "defaults-remote_port": {
+    "prefix": "remote_port",
+    "body": [
+      "remote_port = $1"
+    ],
+    "description": "[defaults] Port to use in remote connections, when blank it will use the connection plugin default.",
+    "scope": "ini"
+  },
+  "defaults-remote_user": {
+    "prefix": "remote_user",
+    "body": [
+      "remote_user = $1"
+    ],
+    "description": "[defaults] Sets the login user for the target machines When blank it uses the connection plugin's default, normally the user curren...",
+    "scope": "ini"
+  },
+  "defaults-roles_path": {
+    "prefix": "roles_path",
+    "body": [
+      "roles_path = ${1:{{ ANSIBLE_HOME ~ \"/roles:/usr/share/ansible/roles:/etc/ansible/roles\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Roles.",
+    "scope": "ini"
+  },
+  "selinux-special_context_filesystems": {
+    "prefix": "special_context_filesystems",
+    "body": [
+      "special_context_filesystems = ${1:fuse, nfs, vboxsf, ramfs, 9p, vfat}"
+    ],
+    "description": "[selinux] Some filesystems do not support safe operations and/or return inconsistent errors, this setting makes Ansible 'tolerate'...",
+    "scope": "ini"
+  },
+  "defaults-stdout_callback": {
+    "prefix": "stdout_callback",
+    "body": [
+      "stdout_callback = ${1:default}"
+    ],
+    "description": "[defaults] Set the main callback used to display Ansible output. You can only have one at a time. You can have many other callbacks...",
+    "scope": "ini"
+  },
+  "defaults-strategy": {
+    "prefix": "strategy",
+    "body": [
+      "strategy = ${1:linear}"
+    ],
+    "description": "[defaults] Set the default strategy used for plays.",
+    "scope": "ini"
+  },
+  "defaults-strategy_plugins": {
+    "prefix": "strategy_plugins",
+    "body": [
+      "strategy_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/strategy:/usr/share/ansible/plugins/strategy\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Strategy Plugins.",
+    "scope": "ini"
+  },
+  "defaults-su": {
+    "prefix": "su",
+    "body": [
+      "su = ${1:false}"
+    ],
+    "description": "[defaults] Toggle the use of \"su\" for tasks.",
+    "scope": "ini"
+  },
+  "defaults-syslog_facility": {
+    "prefix": "syslog_facility",
+    "body": [
+      "syslog_facility = ${1:LOG_USER}"
+    ],
+    "description": "[defaults] Syslog facility to use when Ansible logs to the remote target.",
+    "scope": "ini"
+  },
+  "defaults-terminal_plugins": {
+    "prefix": "terminal_plugins",
+    "body": [
+      "terminal_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/terminal:/usr/share/ansible/plugins/terminal\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Terminal Plugins.",
+    "scope": "ini"
+  },
+  "defaults-test_plugins": {
+    "prefix": "test_plugins",
+    "body": [
+      "test_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/test:/usr/share/ansible/plugins/test\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Jinja2 Test Plugins.",
+    "scope": "ini"
+  },
+  "defaults-timeout": {
+    "prefix": "timeout",
+    "body": [
+      "timeout = ${1:10}"
+    ],
+    "description": "[defaults] This is the default timeout for connection plugins to use.",
+    "scope": "ini"
+  },
+  "defaults-transport": {
+    "prefix": "transport",
+    "body": [
+      "transport = ${1:ssh}"
+    ],
+    "description": "[defaults] Can be any connection plugin available to your ansible installation. There is also a (DEPRECATED) special 'smart' option...",
+    "scope": "ini"
+  },
+  "defaults-error_on_undefined_vars": {
+    "prefix": "error_on_undefined_vars",
+    "body": [
+      "error_on_undefined_vars = ${1:true}"
+    ],
+    "description": "[defaults] When True, this causes ansible templating to fail steps that reference variable names that are likely typoed. Otherwise,...",
+    "scope": "ini"
+  },
+  "defaults-vars_plugins": {
+    "prefix": "vars_plugins",
+    "body": [
+      "vars_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/vars:/usr/share/ansible/plugins/vars\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Vars Plugins.",
+    "scope": "ini"
+  },
+  "defaults-vault_encrypt_identity": {
+    "prefix": "vault_encrypt_identity",
+    "body": [
+      "vault_encrypt_identity = $1"
+    ],
+    "description": "[defaults] The vault_id to use for encrypting by default. If multiple vault_ids are provided, this specifies which to use for encry...",
+    "scope": "ini"
+  },
+  "defaults-vault_identity": {
+    "prefix": "vault_identity",
+    "body": [
+      "vault_identity = ${1:default}"
+    ],
+    "description": "[defaults] The label to use for the default vault id label in cases where a vault id label is not provided.",
+    "scope": "ini"
+  },
+  "defaults-vault_identity_list": {
+    "prefix": "vault_identity_list",
+    "body": [
+      "vault_identity_list = $1"
+    ],
+    "description": "[defaults] A list of vault-ids to use by default. Equivalent to multiple ``--vault-id`` args. Vault-ids are tried in order.",
+    "scope": "ini"
+  },
+  "defaults-vault_id_match": {
+    "prefix": "vault_id_match",
+    "body": [
+      "vault_id_match = ${1:false}"
+    ],
+    "description": "[defaults] If true, decrypting vaults with a vault id will only try the password from the matching vault-id.",
+    "scope": "ini"
+  },
+  "defaults-vault_password_file": {
+    "prefix": "vault_password_file",
+    "body": [
+      "vault_password_file = $1"
+    ],
+    "description": "[defaults] The vault password file to use. Equivalent to ``--vault-password-file`` or ``--vault-id``. If executable, it will be run...",
+    "scope": "ini"
+  },
+  "defaults-verbosity": {
+    "prefix": "verbosity",
+    "body": [
+      "verbosity = ${1:0}"
+    ],
+    "description": "[defaults] Sets the default verbosity, equivalent to the number of ``-v`` passed in the command line.",
+    "scope": "ini"
+  },
+  "defaults-deprecation_warnings": {
+    "prefix": "deprecation_warnings",
+    "body": [
+      "deprecation_warnings = ${1:true}"
+    ],
+    "description": "[defaults] Toggle to control the showing of deprecation warnings",
+    "scope": "ini"
+  },
+  "defaults-devel_warning": {
+    "prefix": "devel_warning",
+    "body": [
+      "devel_warning = ${1:true}"
+    ],
+    "description": "[defaults] Toggle to control showing warnings related to running devel.",
+    "scope": "ini"
+  },
+  "diff-always": {
+    "prefix": "always",
+    "body": [
+      "always = ${1:false}"
+    ],
+    "description": "[diff] Configuration toggle to tell modules to show differences when in 'changed' status, equivalent to ``--diff``.",
+    "scope": "ini"
+  },
+  "diff-context": {
+    "prefix": "context",
+    "body": [
+      "context = ${1:3}"
+    ],
+    "description": "[diff] Number of lines of context to show when displaying the differences between files.",
+    "scope": "ini"
+  },
+  "defaults-display_args_to_stdout": {
+    "prefix": "display_args_to_stdout",
+    "body": [
+      "display_args_to_stdout = ${1:false}"
+    ],
+    "description": "[defaults] Normally ``ansible-playbook`` will print a header for each task that is run. These headers will contain the name: field ...",
+    "scope": "ini"
+  },
+  "defaults-display_skipped_hosts": {
+    "prefix": "display_skipped_hosts",
+    "body": [
+      "display_skipped_hosts = ${1:true}"
+    ],
+    "description": "[defaults] Toggle to control displaying skipped task/host entries in a task in the default callback.",
+    "scope": "ini"
+  },
+  "defaults-docsite_root_url": {
+    "prefix": "docsite_root_url",
+    "body": [
+      "docsite_root_url = ${1:https://docs.ansible.com/ansible-core/}"
+    ],
+    "description": "[defaults] Root docsite URL used to generate docs URLs in warning/error text; must be an absolute URL with a valid scheme and trail...",
+    "scope": "ini"
+  },
+  "defaults-doc_fragment_plugins": {
+    "prefix": "doc_fragment_plugins",
+    "body": [
+      "doc_fragment_plugins = ${1:{{ ANSIBLE_HOME ~ \"/plugins/doc_fragments:/usr/share/ansible/plugins/doc_fragments\" }}}"
+    ],
+    "description": "[defaults] Colon-separated paths in which Ansible will search for Documentation Fragments Plugins.",
+    "scope": "ini"
+  },
+  "defaults-duplicate_dict_key": {
+    "prefix": "duplicate_dict_key",
+    "body": [
+      "duplicate_dict_key = ${1:warn}"
+    ],
+    "description": "[defaults] By default, Ansible will issue a warning when a duplicate dict key is encountered in YAML. These warnings can be silence...",
+    "scope": "ini"
+  },
+  "defaults-editor": {
+    "prefix": "editor",
+    "body": [
+      "editor = ${1:vi}"
+    ],
+    "description": "[defaults] EDITOR",
+    "scope": "ini"
+  },
+  "defaults-enable_task_debugger": {
+    "prefix": "enable_task_debugger",
+    "body": [
+      "enable_task_debugger = ${1:false}"
+    ],
+    "description": "[defaults] Whether or not to enable the task debugger, this previously was done as a strategy plugin. Now all strategy plugins can ...",
+    "scope": "ini"
+  },
+  "defaults-error_on_missing_handler": {
+    "prefix": "error_on_missing_handler",
+    "body": [
+      "error_on_missing_handler = ${1:true}"
+    ],
+    "description": "[defaults] Toggle to allow missing handlers to become a warning instead of an error when notifying.",
+    "scope": "ini"
+  },
+  "defaults-facts_modules": {
+    "prefix": "facts_modules",
+    "body": [
+      "facts_modules = $1"
+    ],
+    "description": "[defaults] Which modules to run during a play's fact gathering stage, using the default of 'smart' will try to figure it out based ...",
+    "scope": "ini"
+  },
+  "galaxy-cache_dir": {
+    "prefix": "cache_dir",
+    "body": [
+      "cache_dir = ${1:{{ ANSIBLE_HOME ~ \"/galaxy_cache\" }}}"
+    ],
+    "description": "[galaxy] The directory that stores cached responses from a Galaxy server. This is only used by the ``ansible-galaxy collection in...",
+    "scope": "ini"
+  },
+  "galaxy-collections_path_warning": {
+    "prefix": "collections_path_warning",
+    "body": [
+      "collections_path_warning = ${1:true}"
+    ],
+    "description": "[galaxy] whether ``ansible-galaxy collection install`` should warn about ``--collections-path`` missing from configured :ref:`col...",
+    "scope": "ini"
+  },
+  "galaxy-collection_skeleton": {
+    "prefix": "collection_skeleton",
+    "body": [
+      "collection_skeleton = $1"
+    ],
+    "description": "[galaxy] Collection skeleton directory to use as a template for the ``init`` action in ``ansible-galaxy collection``, same as ``-...",
+    "scope": "ini"
+  },
+  "galaxy-collection_skeleton_ignore": {
+    "prefix": "collection_skeleton_ignore",
+    "body": [
+      "collection_skeleton_ignore = $1"
+    ],
+    "description": "[galaxy] patterns of files to ignore inside a Galaxy collection skeleton directory.",
+    "scope": "ini"
+  },
+  "galaxy-disable_gpg_verify": {
+    "prefix": "disable_gpg_verify",
+    "body": [
+      "disable_gpg_verify = ${1:false}"
+    ],
+    "description": "[galaxy] Disable GPG signature verification during collection installation.",
+    "scope": "ini"
+  },
+  "galaxy-display_progress": {
+    "prefix": "display_progress",
+    "body": [
+      "display_progress = $1"
+    ],
+    "description": "[galaxy] Some steps in ``ansible-galaxy`` display a progress wheel which can cause issues on certain displays or when outputting ...",
+    "scope": "ini"
+  },
+  "galaxy-gpg_keyring": {
+    "prefix": "gpg_keyring",
+    "body": [
+      "gpg_keyring = $1"
+    ],
+    "description": "[galaxy] Configure the keyring used for GPG signature verification during collection installation and verification.",
+    "scope": "ini"
+  },
+  "galaxy-ignore_certs": {
+    "prefix": "ignore_certs",
+    "body": [
+      "ignore_certs = $1"
+    ],
+    "description": "[galaxy] If set to yes, ansible-galaxy will not validate TLS certificates. This can be useful for testing against a server with a...",
+    "scope": "ini"
+  },
+  "galaxy-ignore_signature_status_codes": {
+    "prefix": "ignore_signature_status_codes",
+    "body": [
+      "ignore_signature_status_codes = $1"
+    ],
+    "description": "[galaxy] A list of GPG status codes to ignore during GPG signature verification. See L(https://github.com/gpg/gnupg/blob/master/d...",
+    "scope": "ini"
+  },
+  "galaxy-required_valid_signature_count": {
+    "prefix": "required_valid_signature_count",
+    "body": [
+      "required_valid_signature_count = ${1:1}"
+    ],
+    "description": "[galaxy] The number of signatures that must be successful during GPG signature verification while installing or verifying collect...",
+    "scope": "ini"
+  },
+  "galaxy-role_skeleton": {
+    "prefix": "role_skeleton",
+    "body": [
+      "role_skeleton = $1"
+    ],
+    "description": "[galaxy] Role skeleton directory to use as a template for the ``init`` action in ``ansible-galaxy``/``ansible-galaxy role``, same...",
+    "scope": "ini"
+  },
+  "galaxy-role_skeleton_ignore": {
+    "prefix": "role_skeleton_ignore",
+    "body": [
+      "role_skeleton_ignore = $1"
+    ],
+    "description": "[galaxy] patterns of files to ignore inside a Galaxy role or collection skeleton directory.",
+    "scope": "ini"
+  },
+  "galaxy-server": {
+    "prefix": "server",
+    "body": [
+      "server = ${1:https://galaxy.ansible.com}"
+    ],
+    "description": "[galaxy] URL to prepend when roles don't specify the full URI, assume they are referencing this server as the source.",
+    "scope": "ini"
+  },
+  "galaxy-server_list": {
+    "prefix": "server_list",
+    "body": [
+      "server_list = $1"
+    ],
+    "description": "[galaxy] A list of Galaxy servers to use when installing a collection. The value corresponds to the config ini header ``[galaxy_s...",
+    "scope": "ini"
+  },
+  "galaxy-server_timeout": {
+    "prefix": "server_timeout",
+    "body": [
+      "server_timeout = ${1:60}"
+    ],
+    "description": "[galaxy] The default timeout for Galaxy API calls. Galaxy servers that don't configure a specific timeout will fall back to this ...",
+    "scope": "ini"
+  },
+  "galaxy-token_path": {
+    "prefix": "token_path",
+    "body": [
+      "token_path = ${1:{{ ANSIBLE_HOME ~ \"/galaxy_token\" }}}"
+    ],
+    "description": "[galaxy] Local path to galaxy access token file",
+    "scope": "ini"
+  },
+  "defaults-host_key_checking": {
+    "prefix": "host_key_checking",
+    "body": [
+      "host_key_checking = ${1:true}"
+    ],
+    "description": "[defaults] Set this to \"False\" if you want to avoid host key checking by the underlying connection plugin Ansible uses to connect t...",
+    "scope": "ini"
+  },
+  "inventory-host_pattern_mismatch": {
+    "prefix": "host_pattern_mismatch",
+    "body": [
+      "host_pattern_mismatch = ${1:warning}"
+    ],
+    "description": "[inventory] This setting changes the behaviour of mismatched host patterns, it allows you to force a fatal error, a warning or just ...",
+    "scope": "ini"
+  },
+  "defaults-inject_facts_as_vars": {
+    "prefix": "inject_facts_as_vars",
+    "body": [
+      "inject_facts_as_vars = ${1:true}"
+    ],
+    "description": "[defaults] Facts are available inside the `ansible_facts` variable, this setting also pushes them as their own vars in the main nam...",
+    "scope": "ini"
+  },
+  "defaults-interpreter_python": {
+    "prefix": "interpreter_python",
+    "body": [
+      "interpreter_python = ${1:auto}"
+    ],
+    "description": "[defaults] Path to the Python interpreter to be used for module execution on remote targets, or an automatic discovery mode. Suppor...",
+    "scope": "ini"
+  },
+  "defaults-invalid_task_attribute_failed": {
+    "prefix": "invalid_task_attribute_failed",
+    "body": [
+      "invalid_task_attribute_failed = ${1:true}"
+    ],
+    "description": "[defaults] If 'false', invalid attributes for a task will result in warnings instead of errors.",
+    "scope": "ini"
+  },
+  "inventory-any_unparsed_is_failed": {
+    "prefix": "any_unparsed_is_failed",
+    "body": [
+      "any_unparsed_is_failed = ${1:false}"
+    ],
+    "description": "[inventory] If 'true', it is a fatal error when any given inventory source cannot be successfully parsed by any available inventory ...",
+    "scope": "ini"
+  },
+  "inventory-cache": {
+    "prefix": "cache",
+    "body": [
+      "cache = ${1:false}"
+    ],
+    "description": "[inventory] Toggle to turn on inventory caching. This setting has been moved to the individual inventory plugins as a plugin option ...",
+    "scope": "ini"
+  },
+  "inventory-cache_plugin": {
+    "prefix": "cache_plugin",
+    "body": [
+      "cache_plugin = $1"
+    ],
+    "description": "[inventory] The plugin for caching inventory. This setting has been moved to the individual inventory plugins as a plugin option :re...",
+    "scope": "ini"
+  },
+  "inventory-cache_connection": {
+    "prefix": "cache_connection",
+    "body": [
+      "cache_connection = $1"
+    ],
+    "description": "[inventory] The inventory cache connection. This setting has been moved to the individual inventory plugins as a plugin option :ref:...",
+    "scope": "ini"
+  },
+  "inventory-cache_prefix": {
+    "prefix": "cache_prefix",
+    "body": [
+      "cache_prefix = ${1:ansible_inventory_}"
+    ],
+    "description": "[inventory] The table prefix for the cache plugin. This setting has been moved to the individual inventory plugins as a plugin optio...",
+    "scope": "ini"
+  },
+  "inventory-cache_timeout": {
+    "prefix": "cache_timeout",
+    "body": [
+      "cache_timeout = ${1:3600}"
+    ],
+    "description": "[inventory] Expiration timeout for the inventory cache plugin data. This setting has been moved to the individual inventory plugins ...",
+    "scope": "ini"
+  },
+  "inventory-enable_plugins": {
+    "prefix": "enable_plugins",
+    "body": [
+      "enable_plugins = $1"
+    ],
+    "description": "[inventory] List of enabled inventory plugins, it also determines the order in which they are used.",
+    "scope": "ini"
+  },
+  "inventory-export": {
+    "prefix": "export",
+    "body": [
+      "export = ${1:false}"
+    ],
+    "description": "[inventory] Controls if ansible-inventory will accurately reflect Ansible's view into inventory or its optimized for exporting.",
+    "scope": "ini"
+  },
+  "defaults-inventory_ignore_extensions": {
+    "prefix": "inventory_ignore_extensions",
+    "body": [
+      "inventory_ignore_extensions = ${1:{{(REJECT_EXTS + ('.orig', '.ini', '.cfg', '.retry'))}}}"
+    ],
+    "description": "[defaults] List of extensions to ignore when using a directory as an inventory source.",
+    "scope": "ini"
+  },
+  "defaults-inventory_ignore_patterns": {
+    "prefix": "inventory_ignore_patterns",
+    "body": [
+      "inventory_ignore_patterns = $1"
+    ],
+    "description": "[defaults] List of patterns to ignore when using a directory as an inventory source.",
+    "scope": "ini"
+  },
+  "inventory-unparsed_is_failed": {
+    "prefix": "unparsed_is_failed",
+    "body": [
+      "unparsed_is_failed = ${1:false}"
+    ],
+    "description": "[inventory] If 'true' it is a fatal error if every single potential inventory source fails to parse, otherwise, this situation will ...",
+    "scope": "ini"
+  },
+  "inventory-inventory_unparsed_warning": {
+    "prefix": "inventory_unparsed_warning",
+    "body": [
+      "inventory_unparsed_warning = ${1:true}"
+    ],
+    "description": "[inventory] By default, Ansible will issue a warning when no inventory was loaded and notes that it will use an implicit localhost-o...",
+    "scope": "ini"
+  },
+  "defaults-localhost_warning": {
+    "prefix": "localhost_warning",
+    "body": [
+      "localhost_warning = ${1:true}"
+    ],
+    "description": "[defaults] By default, Ansible will issue a warning when there are no hosts in the inventory. These warnings can be silenced by adj...",
+    "scope": "ini"
+  },
+  "defaults-log_verbosity": {
+    "prefix": "log_verbosity",
+    "body": [
+      "log_verbosity = $1"
+    ],
+    "description": "[defaults] This will set log verbosity if higher than the normal display verbosity, otherwise it will match that.",
+    "scope": "ini"
+  },
+  "defaults-max_diff_size": {
+    "prefix": "max_diff_size",
+    "body": [
+      "max_diff_size = ${1:104448}"
+    ],
+    "description": "[defaults] Maximum size of files to be considered for diff display.",
+    "scope": "ini"
+  },
+  "defaults-module_ignore_exts": {
+    "prefix": "module_ignore_exts",
+    "body": [
+      "module_ignore_exts = ${1:{{(REJECT_EXTS + ('.yaml', '.yml', '.ini'))}}}"
+    ],
+    "description": "[defaults] List of extensions to ignore when looking for modules to load. This is for rejecting script and binary module fallback e...",
+    "scope": "ini"
+  },
+  "defaults-module_strict_utf8_response": {
+    "prefix": "module_strict_utf8_response",
+    "body": [
+      "module_strict_utf8_response = ${1:true}"
+    ],
+    "description": "[defaults] Enables whether module responses are evaluated for containing non-UTF-8 data. Disabling this may result in unexpected be...",
+    "scope": "ini"
+  },
+  "netconf_connection-ssh_config": {
+    "prefix": "ssh_config",
+    "body": [
+      "ssh_config = $1"
+    ],
+    "description": "[netconf_connection] This variable is used to enable bastion/jump host with netconf connection. If set to True the bastion/jump host ssh sett...",
+    "scope": "ini"
+  },
+  "defaults-network_group_modules": {
+    "prefix": "network_group_modules",
+    "body": [
+      "network_group_modules = $1"
+    ],
+    "description": "[defaults] TODO: write it",
+    "scope": "ini"
+  },
+  "defaults-old_plugin_cache_clear": {
+    "prefix": "old_plugin_cache_clear",
+    "body": [
+      "old_plugin_cache_clear = ${1:false}"
+    ],
+    "description": "[defaults] Previously Ansible would only clear some of the plugin loading caches when loading new roles, this led to some behaviors...",
+    "scope": "ini"
+  },
+  "defaults-pager": {
+    "prefix": "pager",
+    "body": [
+      "pager = ${1:less}"
+    ],
+    "description": "[defaults] PAGER",
+    "scope": "ini"
+  },
+  "paramiko_connection-host_key_auto_add": {
+    "prefix": "host_key_auto_add",
+    "body": [
+      "host_key_auto_add = ${1:false}"
+    ],
+    "description": "[paramiko_connection] TODO: write it",
+    "scope": "ini"
+  },
+  "paramiko_connection-look_for_keys": {
+    "prefix": "look_for_keys",
+    "body": [
+      "look_for_keys = ${1:true}"
+    ],
+    "description": "[paramiko_connection] TODO: write it",
+    "scope": "ini"
+  },
+  "persistent_connection-command_timeout": {
+    "prefix": "command_timeout",
+    "body": [
+      "command_timeout = ${1:30}"
+    ],
+    "description": "[persistent_connection] This controls the amount of time to wait for a response from a remote device before timing out a persistent connection.",
+    "scope": "ini"
+  },
+  "persistent_connection-connect_retry_timeout": {
+    "prefix": "connect_retry_timeout",
+    "body": [
+      "connect_retry_timeout = ${1:15}"
+    ],
+    "description": "[persistent_connection] This controls the retry timeout for persistent connection to connect to the local domain socket.",
+    "scope": "ini"
+  },
+  "persistent_connection-connect_timeout": {
+    "prefix": "connect_timeout",
+    "body": [
+      "connect_timeout = ${1:30}"
+    ],
+    "description": "[persistent_connection] This controls how long the persistent connection will remain idle before it is destroyed.",
+    "scope": "ini"
+  },
+  "persistent_connection-control_path_dir": {
+    "prefix": "control_path_dir",
+    "body": [
+      "control_path_dir = ${1:{{ ANSIBLE_HOME ~ \"/pc\" }}}"
+    ],
+    "description": "[persistent_connection] Path to the socket to be used by the connection persistence system.",
+    "scope": "ini"
+  },
+  "defaults-playbook_dir": {
+    "prefix": "playbook_dir",
+    "body": [
+      "playbook_dir = $1"
+    ],
+    "description": "[defaults] A number of non-playbook CLIs have a ``--playbook-dir`` argument; this sets the default value for it.",
+    "scope": "ini"
+  },
+  "defaults-playbook_vars_root": {
+    "prefix": "playbook_vars_root",
+    "body": [
+      "playbook_vars_root = ${1:top}"
+    ],
+    "description": "[defaults] This sets which playbook dirs will be used as a root to process vars plugins, which includes finding host_vars/group_var...",
+    "scope": "ini"
+  },
+  "defaults-plugin_filters_cfg": {
+    "prefix": "plugin_filters_cfg",
+    "body": [
+      "plugin_filters_cfg = $1"
+    ],
+    "description": "[defaults] A path to configuration for filtering which plugins installed on the system are allowed to be used. See :ref:`plugin_fil...",
+    "scope": "ini"
+  },
+  "defaults-python_module_rlimit_nofile": {
+    "prefix": "python_module_rlimit_nofile",
+    "body": [
+      "python_module_rlimit_nofile = ${1:0}"
+    ],
+    "description": "[defaults] Attempts to set RLIMIT_NOFILE soft limit to the specified value when executing Python modules (can speed up subprocess u...",
+    "scope": "ini"
+  },
+  "defaults-retry_files_enabled": {
+    "prefix": "retry_files_enabled",
+    "body": [
+      "retry_files_enabled = ${1:false}"
+    ],
+    "description": "[defaults] This controls whether a failed Ansible playbook should create a .retry file.",
+    "scope": "ini"
+  },
+  "defaults-retry_files_save_path": {
+    "prefix": "retry_files_save_path",
+    "body": [
+      "retry_files_save_path = $1"
+    ],
+    "description": "[defaults] This sets the path in which Ansible will save .retry files when a playbook fails and retry files are enabled. This file ...",
+    "scope": "ini"
+  },
+  "defaults-run_vars_plugins": {
+    "prefix": "run_vars_plugins",
+    "body": [
+      "run_vars_plugins = ${1:demand}"
+    ],
+    "description": "[defaults] This setting can be used to optimize vars_plugin usage depending on the user's inventory size and play selection.",
+    "scope": "ini"
+  },
+  "defaults-show_custom_stats": {
+    "prefix": "show_custom_stats",
+    "body": [
+      "show_custom_stats = ${1:false}"
+    ],
+    "description": "[defaults] This adds the custom stats set via the set_stats plugin to the default output.",
+    "scope": "ini"
+  },
+  "defaults-string_conversion_action": {
+    "prefix": "string_conversion_action",
+    "body": [
+      "string_conversion_action = ${1:warn}"
+    ],
+    "description": "[defaults] Action to take when a module parameter value is converted to a string (this does not affect variables). For string param...",
+    "scope": "ini"
+  },
+  "jinja2-dont_type_filters": {
+    "prefix": "dont_type_filters",
+    "body": [
+      "dont_type_filters = $1"
+    ],
+    "description": "[jinja2] This list of filters avoids 'type conversion' when templating variables. Useful when you want to avoid conversion into l...",
+    "scope": "ini"
+  },
+  "defaults-system_warnings": {
+    "prefix": "system_warnings",
+    "body": [
+      "system_warnings = ${1:true}"
+    ],
+    "description": "[defaults] Allows disabling of warnings related to potential issues on the system running Ansible itself (not on the managed hosts)...",
+    "scope": "ini"
+  },
+  "tags-run": {
+    "prefix": "run",
+    "body": [
+      "run = $1"
+    ],
+    "description": "[tags] default list of tags to run in your plays, Skip Tags has precedence.",
+    "scope": "ini"
+  },
+  "tags-skip": {
+    "prefix": "skip",
+    "body": [
+      "skip = $1"
+    ],
+    "description": "[tags] default list of tags to skip in your plays, has precedence over Run Tags",
+    "scope": "ini"
+  },
+  "defaults-target_log_info": {
+    "prefix": "target_log_info",
+    "body": [
+      "target_log_info = $1"
+    ],
+    "description": "[defaults] A string to insert into target logging for tracking purposes",
+    "scope": "ini"
+  },
+  "defaults-task_debugger_ignore_errors": {
+    "prefix": "task_debugger_ignore_errors",
+    "body": [
+      "task_debugger_ignore_errors = ${1:true}"
+    ],
+    "description": "[defaults] This option defines whether the task debugger will be invoked on a failed task when ignore_errors=True is specified. Tru...",
+    "scope": "ini"
+  },
+  "defaults-task_timeout": {
+    "prefix": "task_timeout",
+    "body": [
+      "task_timeout = ${1:0}"
+    ],
+    "description": "[defaults] Set the maximum time (in seconds) that a task can run for. If set to 0 (the default) there is no timeout.",
+    "scope": "ini"
+  },
+  "defaults-force_valid_group_names": {
+    "prefix": "force_valid_group_names",
+    "body": [
+      "force_valid_group_names = ${1:never}"
+    ],
+    "description": "[defaults] Make ansible transform invalid characters in group names supplied by inventory sources.",
+    "scope": "ini"
+  },
+  "defaults-use_persistent_connections": {
+    "prefix": "use_persistent_connections",
+    "body": [
+      "use_persistent_connections = ${1:false}"
+    ],
+    "description": "[defaults] Toggles the use of persistence for connections.",
+    "scope": "ini"
+  },
+  "defaults-validate_action_group_metadata": {
+    "prefix": "validate_action_group_metadata",
+    "body": [
+      "validate_action_group_metadata = ${1:true}"
+    ],
+    "description": "[defaults] A toggle to disable validating a collection's 'metadata' entry for a module_defaults action group. Metadata containing u...",
+    "scope": "ini"
+  },
+  "defaults-vars_plugins_enabled": {
+    "prefix": "vars_plugins_enabled",
+    "body": [
+      "vars_plugins_enabled = $1"
+    ],
+    "description": "[defaults] Accept list for variable plugins that require it.",
+    "scope": "ini"
+  },
+  "defaults-precedence": {
+    "prefix": "precedence",
+    "body": [
+      "precedence = $1"
+    ],
+    "description": "[defaults] Allows to change the group variable precedence merge order.",
+    "scope": "ini"
+  },
+  "defaults-vault_encrypt_salt": {
+    "prefix": "vault_encrypt_salt",
+    "body": [
+      "vault_encrypt_salt = $1"
+    ],
+    "description": "[defaults] The salt to use for the vault encryption. If it is not provided, a random salt will be used.",
+    "scope": "ini"
+  },
+  "defaults-verbose_to_stderr": {
+    "prefix": "verbose_to_stderr",
+    "body": [
+      "verbose_to_stderr = ${1:false}"
+    ],
+    "description": "[defaults] Force 'verbose' option to use stderr instead of stdout",
+    "scope": "ini"
+  },
+  "defaults-win_async_startup_timeout": {
+    "prefix": "win_async_startup_timeout",
+    "body": [
+      "win_async_startup_timeout = ${1:5}"
+    ],
+    "description": "[defaults] For asynchronous tasks in Ansible (covered in Asynchronous Actions and Polling), this is how long, in seconds, to wait f...",
+    "scope": "ini"
+  },
+  "defaults-yaml_valid_extensions": {
+    "prefix": "yaml_valid_extensions",
+    "body": [
+      "yaml_valid_extensions = $1"
+    ],
+    "description": "[defaults] Check all of these extensions when looking for 'variable' files which should be YAML or JSON or vaulted versions of thes...",
+    "scope": "ini"
+  }
+}

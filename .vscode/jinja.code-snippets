@@ -1,0 +1,50 @@
+{
+  // Snippets para plantillas Jinja2 (.j2) usadas por ansible.builtin.template
+  "jinja: if": {
+    "prefix": "jif",
+    "scope": "ansible-jinja,jinja,jinja-html,plaintext",
+    "body": ["{% if ${1:condicion} %}", "${2:contenido}", "{% endif %}", "$0"],
+    "description": "Bloque {% if %}"
+  },
+  "jinja: if / else": {
+    "prefix": "jife",
+    "scope": "ansible-jinja,jinja,jinja-html,plaintext",
+    "body": ["{% if ${1:condicion} %}", "${2:a}", "{% else %}", "${3:b}", "{% endif %}", "$0"],
+    "description": "Bloque {% if %}{% else %}"
+  },
+  "jinja: for": {
+    "prefix": "jfor",
+    "scope": "ansible-jinja,jinja,jinja-html,plaintext",
+    "body": ["{% for ${1:item} in ${2:lista} %}", "{{ ${1:item} }}", "{% endfor %}", "$0"],
+    "description": "Bloque {% for %}"
+  },
+  "jinja: set": {
+    "prefix": "jset",
+    "scope": "ansible-jinja,jinja,jinja-html,plaintext",
+    "body": ["{% set ${1:var} = ${2:valor} %}", "$0"],
+    "description": "{% set %}"
+  },
+  "jinja: var con default": {
+    "prefix": "jdefault",
+    "scope": "ansible-jinja,jinja,jinja-html,plaintext",
+    "body": ["{{ ${1:var} | default('${2:fallback}') }}$0"],
+    "description": "Variable con filtro default"
+  },
+  "jinja: comentario / marca generado": {
+    "prefix": "jheader",
+    "scope": "ansible-jinja,jinja,jinja-html,plaintext",
+    "body": ["{# ANSIBLE MANAGED - no editar a mano ({{ ansible_managed }}) #}", "$0"],
+    "description": "Cabecera ansible_managed"
+  },
+  "jinja: groups del inventario": {
+    "prefix": "jgroups",
+    "scope": "ansible-jinja,jinja,jinja-html,plaintext",
+    "body": [
+      "{% for host in groups['${1:grupo}'] %}",
+      "{{ hostvars[host]['ansible_host'] }}",
+      "{% endfor %}",
+      "$0"
+    ],
+    "description": "Iterar hosts de un grupo del inventario"
+  }
+}

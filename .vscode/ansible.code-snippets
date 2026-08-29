@@ -1,0 +1,1066 @@
+{
+  // ---------------------------------------------------------------
+  // Snippets de Ansible (playbooks, tasks, roles, inventarios)
+  // scope: "ansible,yaml" -> aplican a los .yml asociados a "ansible"
+  // y a cualquier YAML suelto. Escribe el prefix y pulsa Tab.
+  // ---------------------------------------------------------------
+
+  // ============ ESQUELETOS DE PLAYBOOK ============
+  "playbook: play completo": {
+    "prefix": "play",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "- name: ${1:Describe que hace este play}",
+      "  hosts: ${2:all}",
+      "  become: ${3|true,false|}",
+      "  gather_facts: ${4|true,false|}",
+      "  vars:",
+      "    ${5:key}: ${6:value}",
+      "  tasks:",
+      "    - name: ${7:Primera tarea}",
+      "      ansible.builtin.${8:debug}:",
+      "        ${9:msg}: ${10:hola}",
+      "$0"
+    ],
+    "description": "Play con hosts, become, vars y tasks"
+  },
+
+  "playbook: play minimo": {
+    "prefix": "play-min",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "- name: ${1:Nombre del play}",
+      "  hosts: ${2:all}",
+      "  tasks:",
+      "    - name: ${3:Nombre de la tarea}",
+      "      ansible.builtin.${4:ping}:",
+      "$0"
+    ],
+    "description": "Play minimo"
+  },
+
+  "playbook: play con roles": {
+    "prefix": "play-roles",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "- name: ${1:Nombre del play}",
+      "  hosts: ${2:all}",
+      "  become: true",
+      "  roles:",
+      "    - role: ${3:nombre_del_role}",
+      "      tags: [${4:tag}]",
+      "$0"
+    ],
+    "description": "Play que aplica roles"
+  },
+
+  "playbook: play avanzado (rolling)": {
+    "prefix": "play-rolling",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Deploy por lotes}",
+      "  hosts: ${2:all}",
+      "  become: true",
+      "  serial: ${3:1}",
+      "  max_fail_percentage: ${4:0}",
+      "  any_errors_fatal: ${5|true,false|}",
+      "  order: ${6|inventory,sorted,reverse_inventory,shuffle|}",
+      "  pre_tasks:",
+      "    - name: ${7:Antes del deploy}",
+      "      ansible.builtin.debug:",
+      "        msg: pre",
+      "  tasks:",
+      "    - name: ${8:Deploy}",
+      "      ansible.builtin.debug:",
+      "        msg: deploy",
+      "  post_tasks:",
+      "    - name: ${9:Despues del deploy}",
+      "      ansible.builtin.debug:",
+      "        msg: post",
+      "$0"
+    ],
+    "description": "Play con serial / pre_tasks / post_tasks"
+  },
+
+  // ============ BLOQUES ESTRUCTURALES ============
+  "seccion: tasks": {
+    "prefix": "tasks",
+    "scope": "ansible,yaml",
+    "body": ["tasks:", "  - name: ${1:Nombre de la tarea}", "    ansible.builtin.${2:debug}:", "      ${3:msg}: ${4:texto}", "$0"],
+    "description": "Seccion tasks:"
+  },
+
+  "seccion: handlers": {
+    "prefix": "handlers",
+    "scope": "ansible,yaml",
+    "body": [
+      "handlers:",
+      "  - name: ${1:Restart service}",
+      "    ansible.builtin.systemd_service:",
+      "      name: ${2:nginx}",
+      "      state: restarted",
+      "$0"
+    ],
+    "description": "Seccion handlers:"
+  },
+
+  "task: generica": {
+    "prefix": "task",
+    "scope": "ansible,yaml",
+    "body": ["- name: ${1:Nombre de la tarea}", "  ansible.builtin.${2:module}:", "    ${3:option}: ${4:value}", "$0"],
+    "description": "Tarea generica"
+  },
+
+  "task: block / rescue / always": {
+    "prefix": "block",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Bloque con manejo de errores}",
+      "  block:",
+      "    - name: ${2:Intentar esto}",
+      "      ansible.builtin.${3:command}: ${4:/bin/true}",
+      "  rescue:",
+      "    - name: ${5:Si falla}",
+      "      ansible.builtin.debug:",
+      "        msg: \"fallo: {{ ansible_failed_result.msg | default('desconocido') }}\"",
+      "  always:",
+      "    - name: ${6:Siempre}",
+      "      ansible.builtin.debug:",
+      "        msg: cleanup",
+      "$0"
+    ],
+    "description": "block / rescue / always"
+  },
+
+  // ============ MODIFICADORES DE TAREA ============
+  "mod: loop": {
+    "prefix": "loop",
+    "scope": "ansible,yaml",
+    "body": ["loop:", "  - ${1:item1}", "  - ${2:item2}", "loop_control:", "  label: \"{{ item }}\"", "$0"],
+    "description": "loop con loop_control.label"
+  },
+
+  "mod: loop sobre dicts": {
+    "prefix": "loop-dict",
+    "scope": "ansible,yaml",
+    "body": [
+      "loop:",
+      "  - { ${1:name}: ${2:foo}, ${3:state}: ${4:present} }",
+      "loop_control:",
+      "  label: \"{{ item.${1:name} }}\"",
+      "$0"
+    ],
+    "description": "loop sobre lista de diccionarios"
+  },
+
+  "mod: when": {
+    "prefix": "when",
+    "scope": "ansible,yaml",
+    "body": ["when: ${1:ansible_facts['os_family'] == 'Debian'}", "$0"],
+    "description": "Condicional when"
+  },
+
+  "mod: register + debug": {
+    "prefix": "register",
+    "scope": "ansible,yaml",
+    "body": [
+      "register: ${1:result}",
+      "",
+      "- name: ${2:Mostrar resultado}",
+      "  ansible.builtin.debug:",
+      "    var: ${1:result}.stdout",
+      "$0"
+    ],
+    "description": "register + debug del resultado"
+  },
+
+  "mod: retries / until": {
+    "prefix": "until",
+    "scope": "ansible,yaml",
+    "body": ["register: ${1:result}", "until: ${1:result} is succeeded", "retries: ${2:5}", "delay: ${3:10}", "$0"],
+    "description": "Reintentos con until"
+  },
+
+  "mod: changed_when / failed_when": {
+    "prefix": "changed_when",
+    "scope": "ansible,yaml",
+    "body": ["changed_when: ${1:false}", "failed_when: ${2:result.rc not in [0, 1]}", "$0"],
+    "description": "changed_when y failed_when"
+  },
+
+  "mod: notify": {
+    "prefix": "notify",
+    "scope": "ansible,yaml",
+    "body": ["notify: ${1:Restart service}", "$0"],
+    "description": "Notificar un handler"
+  },
+
+  "mod: delegate_to / run_once": {
+    "prefix": "delegate",
+    "scope": "ansible,yaml",
+    "body": ["delegate_to: ${1|localhost,127.0.0.1|}", "run_once: ${2|true,false|}", "$0"],
+    "description": "delegate_to y run_once"
+  },
+
+  "mod: tags": {
+    "prefix": "tags",
+    "scope": "ansible,yaml",
+    "body": ["tags:", "  - ${1:setup}", "$0"],
+    "description": "Tags de tarea"
+  },
+
+  "mod: no_log / check_mode": {
+    "prefix": "no_log",
+    "scope": "ansible,yaml",
+    "body": ["no_log: ${1|true,false|}", "$0"],
+    "description": "Ocultar output sensible"
+  },
+
+  "mod: environment": {
+    "prefix": "environment",
+    "scope": "ansible,yaml",
+    "body": ["environment:", "  ${1:AWS_REGION}: ${2:us-east-1}", "$0"],
+    "description": "Variables de entorno para la tarea"
+  },
+
+  // ============ MODULOS DE USO FRECUENTE ============
+  "mod: apt": {
+    "prefix": "apt",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Instalar paquetes}",
+      "  ansible.builtin.apt:",
+      "    name:",
+      "      - ${2:curl}",
+      "    state: ${3|present,latest,absent|}",
+      "    update_cache: ${4|true,false|}",
+      "    cache_valid_time: ${5:3600}",
+      "$0"
+    ],
+    "description": "ansible.builtin.apt"
+  },
+
+  "mod: dnf / yum": {
+    "prefix": "dnf",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Instalar paquetes}",
+      "  ansible.builtin.dnf:",
+      "    name:",
+      "      - ${2:curl}",
+      "    state: ${3|present,latest,absent|}",
+      "$0"
+    ],
+    "description": "ansible.builtin.dnf"
+  },
+
+  "mod: package (agnostico)": {
+    "prefix": "package",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Instalar paquete}",
+      "  ansible.builtin.package:",
+      "    name: ${2:git}",
+      "    state: ${3|present,latest,absent|}",
+      "$0"
+    ],
+    "description": "ansible.builtin.package"
+  },
+
+  "mod: systemd_service": {
+    "prefix": "systemd",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Gestionar servicio}",
+      "  ansible.builtin.systemd_service:",
+      "    name: ${2:nginx}",
+      "    state: ${3|started,stopped,restarted,reloaded|}",
+      "    enabled: ${4|true,false|}",
+      "    daemon_reload: ${5|true,false|}",
+      "$0"
+    ],
+    "description": "ansible.builtin.systemd_service"
+  },
+
+  "mod: copy": {
+    "prefix": "copy",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Copiar archivo}",
+      "  ansible.builtin.copy:",
+      "    src: ${2:files/archivo.conf}",
+      "    dest: ${3:/etc/archivo.conf}",
+      "    owner: ${4:root}",
+      "    group: ${5:root}",
+      "    mode: \"${6:0644}\"",
+      "$0"
+    ],
+    "description": "ansible.builtin.copy"
+  },
+
+  "mod: template": {
+    "prefix": "template",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Renderizar plantilla}",
+      "  ansible.builtin.template:",
+      "    src: ${2:templates/archivo.j2}",
+      "    dest: ${3:/etc/archivo.conf}",
+      "    owner: ${4:root}",
+      "    group: ${5:root}",
+      "    mode: \"${6:0644}\"",
+      "    validate: ${7:/bin/true %s}",
+      "  notify: ${8:Restart service}",
+      "$0"
+    ],
+    "description": "ansible.builtin.template"
+  },
+
+  "mod: file": {
+    "prefix": "file",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Asegurar ruta}",
+      "  ansible.builtin.file:",
+      "    path: ${2:/opt/app}",
+      "    state: ${3|directory,file,absent,touch,link|}",
+      "    owner: ${4:root}",
+      "    group: ${5:root}",
+      "    mode: \"${6:0755}\"",
+      "$0"
+    ],
+    "description": "ansible.builtin.file"
+  },
+
+  "mod: lineinfile": {
+    "prefix": "lineinfile",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Asegurar linea}",
+      "  ansible.builtin.lineinfile:",
+      "    path: ${2:/etc/hosts}",
+      "    regexp: ${3:'^clave'}",
+      "    line: ${4:'clave valor'}",
+      "    state: ${5|present,absent|}",
+      "$0"
+    ],
+    "description": "ansible.builtin.lineinfile"
+  },
+
+  "mod: blockinfile": {
+    "prefix": "blockinfile",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Insertar bloque}",
+      "  ansible.builtin.blockinfile:",
+      "    path: ${2:/etc/archivo.conf}",
+      "    marker: \"# {mark} ANSIBLE ${3:BLOQUE}\"",
+      "    block: |",
+      "      ${4:contenido}",
+      "$0"
+    ],
+    "description": "ansible.builtin.blockinfile"
+  },
+
+  "mod: user": {
+    "prefix": "user",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Crear usuario}",
+      "  ansible.builtin.user:",
+      "    name: ${2:app}",
+      "    groups: ${3:sudo}",
+      "    append: true",
+      "    shell: ${4:/bin/bash}",
+      "    system: ${5|false,true|}",
+      "    state: ${6|present,absent|}",
+      "$0"
+    ],
+    "description": "ansible.builtin.user"
+  },
+
+  "mod: get_url": {
+    "prefix": "get_url",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Descargar archivo}",
+      "  ansible.builtin.get_url:",
+      "    url: ${2:https://example.com/archivo.tar.gz}",
+      "    dest: ${3:/tmp/archivo.tar.gz}",
+      "    mode: \"${4:0644}\"",
+      "    checksum: ${5:sha256:...}",
+      "$0"
+    ],
+    "description": "ansible.builtin.get_url"
+  },
+
+  "mod: unarchive": {
+    "prefix": "unarchive",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Descomprimir}",
+      "  ansible.builtin.unarchive:",
+      "    src: ${2:/tmp/archivo.tar.gz}",
+      "    dest: ${3:/opt}",
+      "    remote_src: ${4|true,false|}",
+      "    creates: ${5:/opt/app}",
+      "$0"
+    ],
+    "description": "ansible.builtin.unarchive"
+  },
+
+  "mod: command": {
+    "prefix": "command",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Ejecutar comando}",
+      "  ansible.builtin.command:",
+      "    cmd: ${2:/usr/bin/true}",
+      "    chdir: ${3:/opt}",
+      "    creates: ${4:/opt/.done}",
+      "  changed_when: ${5:false}",
+      "$0"
+    ],
+    "description": "ansible.builtin.command"
+  },
+
+  "mod: shell": {
+    "prefix": "shell",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Ejecutar shell}",
+      "  ansible.builtin.shell:",
+      "    cmd: |",
+      "      ${2:echo hola}",
+      "    executable: /bin/bash",
+      "  changed_when: ${3:false}",
+      "$0"
+    ],
+    "description": "ansible.builtin.shell"
+  },
+
+  "mod: git": {
+    "prefix": "git",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Clonar repo}",
+      "  ansible.builtin.git:",
+      "    repo: ${2:https://github.com/org/repo.git}",
+      "    dest: ${3:/opt/repo}",
+      "    version: ${4:main}",
+      "    depth: ${5:1}",
+      "$0"
+    ],
+    "description": "ansible.builtin.git"
+  },
+
+  "mod: uri": {
+    "prefix": "uri",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Llamada HTTP}",
+      "  ansible.builtin.uri:",
+      "    url: ${2:https://example.com/health}",
+      "    method: ${3|GET,POST,PUT,DELETE|}",
+      "    status_code: [${4:200}]",
+      "    return_content: ${5|true,false|}",
+      "  register: ${6:response}",
+      "$0"
+    ],
+    "description": "ansible.builtin.uri"
+  },
+
+  "mod: wait_for": {
+    "prefix": "wait_for",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Esperar puerto}",
+      "  ansible.builtin.wait_for:",
+      "    host: ${2:'{{ inventory_hostname }}'}",
+      "    port: ${3:22}",
+      "    state: ${4|started,stopped,drained|}",
+      "    timeout: ${5:300}",
+      "$0"
+    ],
+    "description": "ansible.builtin.wait_for"
+  },
+
+  "mod: cron": {
+    "prefix": "cron",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Crear cron}",
+      "  ansible.builtin.cron:",
+      "    name: ${2:tarea}",
+      "    minute: \"${3:*/5}\"",
+      "    hour: \"${4:*}\"",
+      "    job: ${5:/usr/local/bin/script.sh}",
+      "    user: ${6:root}",
+      "$0"
+    ],
+    "description": "ansible.builtin.cron"
+  },
+
+  "mod: debug": {
+    "prefix": "debug",
+    "scope": "ansible,yaml",
+    "body": ["- name: ${1:Debug}", "  ansible.builtin.debug:", "    ${2|msg,var|}: ${3:valor}", "$0"],
+    "description": "ansible.builtin.debug"
+  },
+
+  "mod: set_fact": {
+    "prefix": "set_fact",
+    "scope": "ansible,yaml",
+    "body": ["- name: ${1:Definir fact}", "  ansible.builtin.set_fact:", "    ${2:mi_var}: ${3:valor}", "$0"],
+    "description": "ansible.builtin.set_fact"
+  },
+
+  "mod: assert": {
+    "prefix": "assert",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Validar precondiciones}",
+      "  ansible.builtin.assert:",
+      "    that:",
+      "      - ${2:mi_var is defined}",
+      "    fail_msg: ${3:Falta mi_var}",
+      "    success_msg: ${4:OK}",
+      "$0"
+    ],
+    "description": "ansible.builtin.assert"
+  },
+
+  "mod: include_tasks / import_tasks": {
+    "prefix": "include_tasks",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Incluir tareas}",
+      "  ansible.builtin.${2|include_tasks,import_tasks|}: ${3:tasks/otro.yml}",
+      "$0"
+    ],
+    "description": "include_tasks / import_tasks"
+  },
+
+  "mod: include_role / import_role": {
+    "prefix": "include_role",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Aplicar role}",
+      "  ansible.builtin.${2|include_role,import_role|}:",
+      "    name: ${3:nombre_del_role}",
+      "  vars:",
+      "    ${4:key}: ${5:value}",
+      "$0"
+    ],
+    "description": "include_role / import_role"
+  },
+
+  "mod: authorized_key": {
+    "prefix": "authorized_key",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Instalar clave SSH}",
+      "  ansible.posix.authorized_key:",
+      "    user: ${2:ubuntu}",
+      "    key: \"{{ lookup('file', '${3:~/.ssh/id_ed25519.pub}') }}\"",
+      "    state: present",
+      "$0"
+    ],
+    "description": "ansible.posix.authorized_key"
+  },
+
+  "mod: sysctl": {
+    "prefix": "sysctl",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Ajustar sysctl}",
+      "  ansible.posix.sysctl:",
+      "    name: ${2:net.ipv4.ip_forward}",
+      "    value: \"${3:1}\"",
+      "    sysctl_set: true",
+      "    state: present",
+      "    reload: true",
+      "$0"
+    ],
+    "description": "ansible.posix.sysctl"
+  },
+
+  // ============ INVENTARIO DINAMICO AWS ============
+  "inv: aws_ec2 completo": {
+    "prefix": "inv-aws",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "plugin: amazon.aws.aws_ec2",
+      "regions:",
+      "  - ${1:us-east-1}",
+      "filters:",
+      "  instance-state-name: running",
+      "  \"tag:${2:Project}\": ${3:devops-chair}",
+      "hostnames:",
+      "  - ${4|private-ip-address,ip-address,dns-name,private-dns-name,tag:Name|}",
+      "keyed_groups:",
+      "  - key: tags.${5:Role}",
+      "    prefix: ${6:role}",
+      "    separator: \"_\"",
+      "compose:",
+      "  ansible_host: ${7|private_ip_address,public_ip_address|}",
+      "strict: false",
+      "$0"
+    ],
+    "description": "Inventario dinamico amazon.aws.aws_ec2"
+  },
+
+  "inv: filters": {
+    "prefix": "filters",
+    "scope": "ansible,yaml",
+    "body": [
+      "filters:",
+      "  instance-state-name: ${1|running,stopped,pending,terminated|}",
+      "  \"tag:${2:Name}\": ${3:valor}",
+      "$0"
+    ],
+    "description": "Bloque filters del inventario EC2"
+  },
+
+  "inv: keyed_groups": {
+    "prefix": "keyed_groups",
+    "scope": "ansible,yaml",
+    "body": [
+      "keyed_groups:",
+      "  - key: ${1|tags,placement.availability_zone,instance_type,vpc_id|}${2:.Role}",
+      "    prefix: ${3:role}",
+      "    separator: \"_\"",
+      "$0"
+    ],
+    "description": "keyed_groups del inventario EC2"
+  },
+
+  "inv: groups (condicionales)": {
+    "prefix": "inv-groups",
+    "scope": "ansible,yaml",
+    "body": ["groups:", "  ${1:nats}: \"'${2:nats}' in (tags.${3:Role} | default(''))\"", "$0"],
+    "description": "groups condicionales del inventario"
+  },
+
+  "inv: compose": {
+    "prefix": "compose",
+    "scope": "ansible,yaml",
+    "body": [
+      "compose:",
+      "  ansible_host: ${1|private_ip_address,public_ip_address,public_dns_name|}",
+      "  ${2:mi_var}: ${3:tags.Name}",
+      "$0"
+    ],
+    "description": "compose del inventario"
+  },
+
+  "inv: estatico": {
+    "prefix": "inv-static",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "all:",
+      "  vars:",
+      "    ansible_user: ${1:ubuntu}",
+      "  children:",
+      "    ${2:grupo}:",
+      "      hosts:",
+      "        ${3:host1}:",
+      "          ansible_host: ${4:10.0.0.10}",
+      "$0"
+    ],
+    "description": "Inventario estatico YAML"
+  },
+
+  // ============ ROLES / VARS / META ============
+  "role: defaults o vars": {
+    "prefix": "vars",
+    "scope": "ansible,yaml",
+    "body": ["---", "${1:mi_var}: ${2:valor}", "$0"],
+    "description": "Archivo de vars/defaults"
+  },
+
+  "role: meta/main.yml": {
+    "prefix": "meta",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "galaxy_info:",
+      "  role_name: ${1:nombre}",
+      "  author: ${2:Luis}",
+      "  description: ${3:Que hace el role}",
+      "  license: MIT",
+      "  min_ansible_version: \"2.15\"",
+      "  platforms:",
+      "    - name: Ubuntu",
+      "      versions:",
+      "        - jammy",
+      "dependencies: []",
+      "$0"
+    ],
+    "description": "meta/main.yml de un role"
+  },
+
+  "role: argument_specs": {
+    "prefix": "argspec",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "argument_specs:",
+      "  main:",
+      "    short_description: ${1:Que hace el role}",
+      "    options:",
+      "      ${2:mi_var}:",
+      "        type: ${3|str,int,bool,list,dict|}",
+      "        required: ${4|true,false|}",
+      "        description: ${5:Para que sirve}",
+      "$0"
+    ],
+    "description": "meta/argument_specs.yml"
+  },
+
+  "requirements.yml": {
+    "prefix": "requirements",
+    "scope": "ansible,yaml",
+    "body": [
+      "---",
+      "collections:",
+      "  - name: ${1:amazon.aws}",
+      "    version: \">=${2:8.0.0}\"",
+      "roles: []",
+      "$0"
+    ],
+    "description": "requirements.yml de galaxy"
+  }
+,
+
+  // ============ KEYWORDS DE PLAY / TASK (una linea) ============
+  "kw: hosts": {
+    "prefix": "hosts",
+    "scope": "ansible,yaml",
+    "body": ["hosts: ${1|all,localhost,role_nats,role_app,ungrouped|}", "$0"],
+    "description": "Keyword hosts"
+  },
+  "kw: become": {
+    "prefix": "become",
+    "scope": "ansible,yaml",
+    "body": ["become: true", "become_user: ${1:root}", "become_method: ${2|sudo,su,doas|}", "$0"],
+    "description": "Escalado de privilegios"
+  },
+  "kw: gather_facts": {
+    "prefix": "gather_facts",
+    "scope": "ansible,yaml",
+    "body": ["gather_facts: ${1|true,false|}", "$0"],
+    "description": "Keyword gather_facts"
+  },
+  "kw: vars_files": {
+    "prefix": "vars_files",
+    "scope": "ansible,yaml",
+    "body": ["vars_files:", "  - ${1:vars/main.yml}", "$0"],
+    "description": "Keyword vars_files"
+  },
+  "kw: vars_prompt": {
+    "prefix": "vars_prompt",
+    "scope": "ansible,yaml",
+    "body": [
+      "vars_prompt:",
+      "  - name: ${1:mi_var}",
+      "    prompt: ${2:Valor?}",
+      "    private: ${3|false,true|}",
+      "$0"
+    ],
+    "description": "Keyword vars_prompt"
+  },
+  "kw: pre_tasks / post_tasks": {
+    "prefix": "pre_tasks",
+    "scope": "ansible,yaml",
+    "body": [
+      "pre_tasks:",
+      "  - name: ${1:Antes}",
+      "    ansible.builtin.debug:",
+      "      msg: pre",
+      "post_tasks:",
+      "  - name: ${2:Despues}",
+      "    ansible.builtin.debug:",
+      "      msg: post",
+      "$0"
+    ],
+    "description": "pre_tasks y post_tasks"
+  },
+  "kw: roles": {
+    "prefix": "roles",
+    "scope": "ansible,yaml",
+    "body": ["roles:", "  - ${1:nombre_del_role}", "$0"],
+    "description": "Keyword roles"
+  },
+  "kw: strategy / serial / forks": {
+    "prefix": "strategy",
+    "scope": "ansible,yaml",
+    "body": ["strategy: ${1|linear,free,host_pinned,debug|}", "$0"],
+    "description": "Keyword strategy"
+  },
+  "kw: collections": {
+    "prefix": "collections",
+    "scope": "ansible,yaml",
+    "body": ["collections:", "  - ${1:amazon.aws}", "$0"],
+    "description": "Keyword collections del play"
+  },
+  "kw: throttle / poll / async": {
+    "prefix": "async",
+    "scope": "ansible,yaml",
+    "body": ["async: ${1:300}", "poll: ${2:0}", "$0"],
+    "description": "Tarea asincrona"
+  },
+
+  // ============ LOOKUPS Y VARIABLES ============
+  "lookup: env": {
+    "prefix": "lookup-env",
+    "scope": "ansible,yaml",
+    "body": ["\"{{ lookup('ansible.builtin.env', '${1:AWS_REGION}') }}\"$0"],
+    "description": "lookup env"
+  },
+  "lookup: file": {
+    "prefix": "lookup-file",
+    "scope": "ansible,yaml",
+    "body": ["\"{{ lookup('ansible.builtin.file', '${1:ruta}') }}\"$0"],
+    "description": "lookup file"
+  },
+  "lookup: template": {
+    "prefix": "lookup-template",
+    "scope": "ansible,yaml",
+    "body": ["\"{{ lookup('ansible.builtin.template', '${1:archivo.j2}') }}\"$0"],
+    "description": "lookup template"
+  },
+  "lookup: password / aws_ssm": {
+    "prefix": "lookup-ssm",
+    "scope": "ansible,yaml",
+    "body": ["\"{{ lookup('amazon.aws.aws_ssm', '${1:/ruta/parametro}', region='${2:us-east-1}') }}\"$0"],
+    "description": "lookup de SSM Parameter Store"
+  },
+  "var: hostvars / groups": {
+    "prefix": "hostvars",
+    "scope": "ansible,yaml",
+    "body": ["\"{{ hostvars[${1:inventory_hostname}]['${2:ansible_host}'] }}\"$0"],
+    "description": "Acceso a hostvars"
+  },
+  "var: facts comunes": {
+    "prefix": "facts",
+    "scope": "ansible,yaml",
+    "body": ["\"{{ ansible_facts['${1|distribution,distribution_version,os_family,hostname,default_ipv4,processor_vcpus,memtotal_mb|}'] }}\"$0"],
+    "description": "ansible_facts frecuentes"
+  },
+
+  // ============ MODULOS EXTRA FRECUENTES ============
+  "mod: ping": {
+    "prefix": "ping",
+    "scope": "ansible,yaml",
+    "body": ["- name: ${1:Comprobar conectividad}", "  ansible.builtin.ping:", "$0"],
+    "description": "ansible.builtin.ping"
+  },
+  "mod: setup (gather subset)": {
+    "prefix": "setup",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Recolectar facts}",
+      "  ansible.builtin.setup:",
+      "    gather_subset:",
+      "      - ${2|!all,min,network,hardware|}",
+      "$0"
+    ],
+    "description": "ansible.builtin.setup"
+  },
+  "mod: stat": {
+    "prefix": "stat",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Comprobar ruta}",
+      "  ansible.builtin.stat:",
+      "    path: ${2:/opt/app}",
+      "  register: ${3:st}",
+      "$0"
+    ],
+    "description": "ansible.builtin.stat"
+  },
+  "mod: slurp / fetch": {
+    "prefix": "fetch",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Traer archivo del host}",
+      "  ansible.builtin.fetch:",
+      "    src: ${2:/etc/archivo.conf}",
+      "    dest: ${3:./artifacts/}",
+      "    flat: true",
+      "$0"
+    ],
+    "description": "ansible.builtin.fetch"
+  },
+  "mod: pip": {
+    "prefix": "pip",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Instalar paquetes python}",
+      "  ansible.builtin.pip:",
+      "    name:",
+      "      - ${2:boto3}",
+      "    state: ${3|present,latest,absent|}",
+      "    virtualenv: ${4:/opt/venv}",
+      "$0"
+    ],
+    "description": "ansible.builtin.pip"
+  },
+  "mod: apt_repository": {
+    "prefix": "apt_repository",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Anadir repositorio}",
+      "  ansible.builtin.apt_repository:",
+      "    repo: ${2:'deb https://example.com/apt stable main'}",
+      "    state: present",
+      "    filename: ${3:mi-repo}",
+      "$0"
+    ],
+    "description": "ansible.builtin.apt_repository"
+  },
+  "mod: service_facts": {
+    "prefix": "service_facts",
+    "scope": "ansible,yaml",
+    "body": ["- name: ${1:Leer estado de servicios}", "  ansible.builtin.service_facts:", "$0"],
+    "description": "ansible.builtin.service_facts"
+  },
+  "mod: reboot / wait_for_connection": {
+    "prefix": "reboot",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Reiniciar host}",
+      "  ansible.builtin.reboot:",
+      "    reboot_timeout: ${2:600}",
+      "",
+      "- name: ${3:Esperar reconexion}",
+      "  ansible.builtin.wait_for_connection:",
+      "    timeout: ${4:300}",
+      "$0"
+    ],
+    "description": "reboot + wait_for_connection"
+  },
+  "mod: hostname / timezone": {
+    "prefix": "hostname",
+    "scope": "ansible,yaml",
+    "body": ["- name: ${1:Fijar hostname}", "  ansible.builtin.hostname:", "    name: ${2:app-01}", "$0"],
+    "description": "ansible.builtin.hostname"
+  },
+  "mod: mount (posix)": {
+    "prefix": "mount",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Montar volumen}",
+      "  ansible.posix.mount:",
+      "    path: ${2:/data}",
+      "    src: ${3:/dev/nvme1n1}",
+      "    fstype: ${4|ext4,xfs|}",
+      "    opts: ${5:defaults,noatime}",
+      "    state: ${6|mounted,present,absent,unmounted|}",
+      "$0"
+    ],
+    "description": "ansible.posix.mount"
+  },
+  "mod: firewalld / ufw": {
+    "prefix": "ufw",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Regla de firewall}",
+      "  community.general.ufw:",
+      "    rule: ${2|allow,deny,limit,reject|}",
+      "    port: \"${3:4222}\"",
+      "    proto: ${4|tcp,udp|}",
+      "$0"
+    ],
+    "description": "community.general.ufw"
+  },
+  "mod: docker_container": {
+    "prefix": "docker_container",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Ejecutar contenedor}",
+      "  community.docker.docker_container:",
+      "    name: ${2:app}",
+      "    image: ${3:nats:latest}",
+      "    state: ${4|started,present,absent,stopped|}",
+      "    restart_policy: ${5|unless-stopped,always,on-failure,no|}",
+      "    published_ports:",
+      "      - \"${6:4222}:${6:4222}\"",
+      "    env:",
+      "      ${7:KEY}: \"${8:value}\"",
+      "$0"
+    ],
+    "description": "community.docker.docker_container"
+  },
+  "mod: docker_compose_v2": {
+    "prefix": "docker_compose",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Levantar compose}",
+      "  community.docker.docker_compose_v2:",
+      "    project_src: ${2:/opt/app}",
+      "    state: ${3|present,absent,stopped,restarted|}",
+      "    pull: ${4|missing,always,never|}",
+      "$0"
+    ],
+    "description": "community.docker.docker_compose_v2"
+  },
+  "mod: aws ec2_instance_info": {
+    "prefix": "ec2_instance_info",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Consultar instancias}",
+      "  amazon.aws.ec2_instance_info:",
+      "    region: ${2:us-east-1}",
+      "    filters:",
+      "      instance-state-name: running",
+      "      \"tag:${3:Role}\": ${4:nats}",
+      "  register: ${5:ec2}",
+      "  delegate_to: localhost",
+      "$0"
+    ],
+    "description": "amazon.aws.ec2_instance_info"
+  },
+  "mod: aws s3_object": {
+    "prefix": "s3_object",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Operacion en S3}",
+      "  amazon.aws.s3_object:",
+      "    bucket: ${2:mi-bucket}",
+      "    object: ${3:/ruta/archivo}",
+      "    src: ${4:/tmp/archivo}",
+      "    mode: ${5|get,put,delete,list|}",
+      "    region: ${6:us-east-1}",
+      "$0"
+    ],
+    "description": "amazon.aws.s3_object"
+  },
+  "mod: aws ssm_parameter": {
+    "prefix": "ssm_parameter",
+    "scope": "ansible,yaml",
+    "body": [
+      "- name: ${1:Leer/escribir parametro SSM}",
+      "  amazon.aws.ssm_parameter:",
+      "    name: ${2:/app/config}",
+      "    value: ${3:valor}",
+      "    string_type: ${4|String,SecureString,StringList|}",
+      "    region: ${5:us-east-1}",
+      "  delegate_to: localhost",
+      "$0"
+    ],
+    "description": "amazon.aws.ssm_parameter"
+  },
+  "grupo: group_vars": {
+    "prefix": "group_vars",
+    "scope": "ansible,yaml",
+    "body": ["---", "ansible_user: ${1:ubuntu}", "ansible_python_interpreter: /usr/bin/python3", "$0"],
+    "description": "Archivo group_vars/*.yml tipico"
+  }
+}
