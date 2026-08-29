@@ -33,6 +33,7 @@ resource "aws_instance" "nat" {
   source_dest_check = false
   tags = {
     Name = "${var.prefix_name}-nat-instance"
+    Role = "nat"
   }
   iam_instance_profile = var.iam_instance_profile_name
 }
