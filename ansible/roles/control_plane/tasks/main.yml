@@ -1,0 +1,46 @@
+---
+# tasks file for roles/control_plane
+
+- name: Verificar si el clúster ya está inicializado (Idempotencia)
+  ansible.builtin.stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubeadm_conf
+
+- name: Inicializar el clúster con kubeadm (Solo si no existe)
+  ansible.builtin.command: |
+    kubeadm init --pod-network-cidr=192.168.0.0/16
+  when: not kubeadm_conf.stat.exists
+
+- name: Crear directorio .kube para el usuario ubuntu
+  ansible.builtin.file:
+    path: /home/ubuntu/.kube
+    state: directory
+    mode: '0755'
+    owner: ubuntu
+    group: ubuntu
+
+- name: Copiar el archivo admin.conf al usuario ubuntu (Para usar kubectl localmente)
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/ubuntu/.kube/config
+    remote_src: true
+    owner: ubuntu
+    group: ubuntu
+    mode: '0600'
+
+- name: Instalar el plugin de red Calico (CNI)
+  ansible.builtin.command: |
+    kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/calico.yaml
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  # apply es seguro correrlo varias veces, pero evitamos que Ansible lo marque como un cambio constante
+  changed_when: false
+
+- name: Generar el comando exacto para unir los workers al clúster
+  ansible.builtin.command: kubeadm token create --print-join-command
+  register: join_command_raw
+  changed_when: false
+
+- name: Guardar el comando de unión en la memoria dinámica de Ansible (set_fact)
+  ansible.builtin.set_fact:
+    kubernetes_join_command: '{{ join_command_raw.stdout }}'

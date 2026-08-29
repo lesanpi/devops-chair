@@ -1,2 +1,46 @@
 ---
 # tasks file for roles/containerd
+
+- name: Load kernel modules needed for containerd
+  community.general.modprobe:
+    name: '{{ item }}'
+    state: present
+  loop:
+    - overlay
+    - br_netfilter
+
+- name: Configurar parámetros sysctl para red de Kubernetes
+  ansible.posix.sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    sysctl_set: true
+    state: present
+    reload: true
+  loop:
+    - { key: 'net.bridge.bridge-nf-call-iptables', value: '1' }
+    - { key: 'net.ipv4.ip_forward', value: '1' }
+
+- name: Instalar containerd (Ubuntu usa apt)
+  ansible.builtin.apt:
+    name: containerd
+    state: present
+    update_cache: true
+
+- name: Crear directorio de configuración de containerd
+  ansible.builtin.file:
+    path: /etc/containerd
+    state: directory
+    mode: '0755'
+
+- name: Generar configuración por defecto de containerd
+  ansible.builtin.shell: containerd config default > /etc/containerd/config.toml
+  args:
+    creates: /etc/containerd/config.toml
+  notify: Reiniciar containerd
+
+- name: Configurar SystemdCgroup en true (Crítico para kubelet)
+  ansible.builtin.replace:
+    path: /etc/containerd/config.toml
+    regexp: 'SystemdCgroup = false'
+    replace: 'SystemdCgroup = true'
+  notify: Reiniciar containerd

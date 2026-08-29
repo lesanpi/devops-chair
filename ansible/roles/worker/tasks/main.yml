@@ -1,0 +1,11 @@
+---
+# tasks file for roles/worker
+
+- name: Verificar si el worker ya está unido al clúster (Idempotencia)
+  ansible.builtin.stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubelet_conf
+
+- name: Unir el worker al clúster consumiendo el token en memoria
+  ansible.builtin.command: "{{ hostvars[groups['role_control-plane'][0]]['kubernetes_join_command'] }}"
+  when: not kubelet_conf.stat.exists

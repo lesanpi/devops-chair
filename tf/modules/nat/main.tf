@@ -56,5 +56,5 @@ resource "aws_route" "private_nat_route" {
 resource "aws_route_table_association" "private" {
   count          = length(var.private_subnets_id)
   route_table_id = var.private_route_table_id
-  subnet_id      = private_subnets[count.index]
+  subnet_id      = var.private_subnets_id[count.index]
 }

@@ -2,16 +2,18 @@ plugin: amazon.aws.aws_ec2
 regions:
   - us-east-1
 hostnames:
-  - private-ip-address
+  - instance-id
 
 keyed_groups:
-  - key: tags.Role
+  - key: ec2_tags.Role
     prefix: role
     separator: '_'
+
 filters:
   instance-state-name: running
   'tag:Project': devops-chair-k8s
 
 compose:
   ansible_connection: "'amazon.aws.aws_ssm'"
-  ansible_user: "tags.Role == 'nat' | ternary('ec2-user', 'ubuntu')"
+  ansible_aws_ssm_region: "'us-east-1'"
+  # ansible_user: "ec2_tags.Role == 'nat' | ternary('ec2-user', 'ubuntu')"

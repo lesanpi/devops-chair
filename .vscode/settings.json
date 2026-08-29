@@ -37,11 +37,13 @@
       "strings": "on"
     },
     "editor.wordBasedSuggestions": "matchingDocuments",
-    "editor.suggest.preview": true,
+    "editor.suggest.preview": false,
     "editor.suggest.showSnippets": true,
-    "editor.snippetSuggestions": "top",
+    "editor.snippetSuggestions": "inline",
     "editor.suggestOnTriggerCharacters": true,
-    "editor.acceptSuggestionOnEnter": "on"
+    "editor.acceptSuggestionOnEnter": "on",
+    "editor.inlineSuggest.enabled": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false
   },
   "[ini]": {
     "editor.tabSize": 2,
@@ -100,12 +102,14 @@
       "strings": "on"
     },
     "editor.wordBasedSuggestions": "matchingDocuments",
-    "editor.suggest.preview": true,
+    "editor.suggest.preview": false,
     "editor.suggest.showSnippets": true,
-    "editor.snippetSuggestions": "top",
+    "editor.snippetSuggestions": "inline",
     "editor.suggestOnTriggerCharacters": true,
     "editor.acceptSuggestionOnEnter": "on",
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.inlineSuggest.enabled": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false
   },
   "ansible.ansible.path": "/Library/Frameworks/Python.framework/Versions/3.11/bin/ansible",
   "ansible.ansible.useFullyQualifiedCollectionNames": true,
