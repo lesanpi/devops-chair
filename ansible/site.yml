@@ -2,6 +2,7 @@
 # Phase 1: Network and outbound
 - name: 'Phase 1: Network and Internet'
   hosts: role_nat
+  remote_user: ec2-user
   become: true
   roles:
     - nat_setup

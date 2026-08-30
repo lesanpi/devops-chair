@@ -20,11 +20,31 @@
     enabled: true
     state: started
 
-- name: Enable Masquerade
+- name: Allow forwarding of return traffic
+  ansible.builtin.iptables:
+    chain: FORWARD
+    ctstate: [ESTABLISHED, RELATED]
+    jump: ACCEPT
+    action: insert
+  notify: Save iptables rules
+
+- name: Allow forwarding from the VPC
+  ansible.builtin.iptables:
+    chain: FORWARD
+    source: 10.0.0.0/16
+    jump: ACCEPT
+    action: insert
+  notify: Save iptables rules
+
+- name: Show primary interface.
+  ansible.builtin.debug:
+    msg: 'Interface {{ ansible_default_ipv4.interface }}'
+
+- name: Enable Masquerade on dynamic default interface
   ansible.builtin.iptables:
     table: nat
     chain: POSTROUTING
-    out_interface: ens5
+    out_interface: '{{ ansible_default_ipv4.interface }}'
     jump: MASQUERADE
     state: present
   notify: Save iptables rules
