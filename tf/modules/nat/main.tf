@@ -36,6 +36,9 @@ resource "aws_instance" "nat" {
     Role = "nat"
   }
   iam_instance_profile = var.iam_instance_profile_name
+  lifecycle {
+    ignore_changes = [ami]
+  }
 }
 
 resource "aws_eip" "nat" {
