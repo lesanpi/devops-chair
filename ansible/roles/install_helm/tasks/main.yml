@@ -1,0 +1,13 @@
+---
+# tasks file for roles/install_helm
+- name: Install Helm V3
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    dest: /tmp/get-helm-3
+    mode: '0700'
+
+- name: Install Helm V3
+  ansible.builtin.command:
+    cmd: /tmp/get-helm-3
+  args:
+    creates: /usr/local/bin/helm

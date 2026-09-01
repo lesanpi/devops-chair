@@ -28,3 +28,10 @@
   become: true
   roles:
     - worker
+
+- name: 'Phase 5: Install Helm and Ingress Nginx'
+  hosts: role_control_plane
+  become: true
+  roles:
+    - install_helm
+    - install_ingress_nginx
