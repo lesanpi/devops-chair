@@ -55,7 +55,6 @@ jobs:
       - name: 'Validate Dynamic Inventory'
         run: |
           ansible-inventory --graph
-          ansible-inventory --list
 
       - name: 'Run Ansible'
         run: ansible-playbook site.yml
