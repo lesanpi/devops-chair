@@ -65,3 +65,22 @@ resource "aws_security_group_rule" "allow_all_internal_worker" {
   security_group_id        = aws_security_group.worker.id
   source_security_group_id = aws_security_group.control_plane.id
 }
+
+
+resource "aws_security_group_rule" "allow_http_ingress_worker" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  security_group_id = aws_security_group.worker.id
+  cidr_blocks       = [var.vpc_cidr]
+}
+
+resource "aws_security_group_rule" "allow_https_ingress_worker" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  security_group_id = aws_security_group.worker.id
+  cidr_blocks       = [var.vpc_cidr]
+}
