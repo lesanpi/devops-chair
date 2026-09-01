@@ -16,7 +16,7 @@ module "nat" {
   private_route_table_id    = module.network.private_route_table_id
   private_subnets_id        = module.network.private_subnet_ids
   iam_instance_profile_name = module.security.ssm_instance_profile_name
-  depends_on                = [moduule.network]
+  depends_on                = [module.network]
 }
 
 module "security" {
