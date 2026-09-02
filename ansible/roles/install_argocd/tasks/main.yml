@@ -1,8 +1,7 @@
 ---
 # tasks file for roles/install_argocd
 - name: Install ArgoCD
-  ansible.builtin.command: |
-    kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+  ansible.builtin.command: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
   environment:
     KUBECONFIG: /etc/kubernetes/admin.conf
 
