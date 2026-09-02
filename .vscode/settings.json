@@ -2,8 +2,6 @@
   "files.associations": {
     "**/ansible/**/*.yml": "ansible",
     "**/ansible/**/*.yaml": "ansible",
-    "**/inventory/**/*.yml": "ansible",
-    "**/inventory/**/*.yaml": "ansible",
     "**/playbooks/**/*.yml": "ansible",
     "**/playbooks/**/*.yaml": "ansible",
     "**/roles/**/tasks/**/*.yml": "ansible",
@@ -23,7 +21,37 @@
     "**/ansible.cfg": "ini",
     "ansible.cfg": "ini",
     "**/*.j2": "ansible-jinja",
-    "**/templates/**/*.j2": "ansible-jinja"
+    "**/templates/**/*.j2": "ansible-jinja",
+    "k8s/**/*.yml": "yaml",
+    "k8s/**/*.yaml": "yaml",
+    "ansible/inventory/**/*.yml": "yaml",
+    "ansible/inventory/**/*.yaml": "yaml"
+  },
+  "yaml.schemas": {
+    "kubernetes": [
+      "k8s/**/*.yml",
+      "k8s/**/*.yaml"
+    ],
+    "https://json.schemastore.org/ansible-playbook": [
+      "ansible/site.yml",
+      "ansible/site.yaml",
+      "ansible/playbooks/**/*.yml",
+      "ansible/playbooks/**/*.yaml"
+    ],
+    "https://json.schemastore.org/ansible-inventory": [
+      "ansible/inventory/**/*.yml",
+      "ansible/inventory/**/*.yaml"
+    ],
+    "https://json.schemastore.org/ansible-role-2.9": [
+      "ansible/roles/**/tasks/**/*.yml",
+      "ansible/roles/**/tasks/**/*.yaml",
+      "ansible/roles/**/handlers/**/*.yml",
+      "ansible/roles/**/handlers/**/*.yaml",
+      "ansible/roles/**/defaults/**/*.yml",
+      "ansible/roles/**/defaults/**/*.yaml",
+      "ansible/roles/**/vars/**/*.yml",
+      "ansible/roles/**/vars/**/*.yaml"
+    ]
   },
   "[ansible]": {
     "editor.tabSize": 2,
@@ -37,9 +65,9 @@
       "strings": "on"
     },
     "editor.wordBasedSuggestions": "matchingDocuments",
-    "editor.suggest.preview": false,
+    "editor.suggest.preview": true,
     "editor.suggest.showSnippets": true,
-    "editor.snippetSuggestions": "inline",
+    "editor.snippetSuggestions": "top",
     "editor.suggestOnTriggerCharacters": true,
     "editor.acceptSuggestionOnEnter": "on",
     "editor.inlineSuggest.enabled": true,
@@ -61,11 +89,47 @@
     "editor.suggestOnTriggerCharacters": true,
     "editor.acceptSuggestionOnEnter": "on"
   },
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "off",
+      "strings": "on"
+    },
+    "editor.wordBasedSuggestions": "matchingDocuments",
+    "editor.suggest.preview": true,
+    "editor.suggest.showSnippets": true,
+    "editor.snippetSuggestions": "top",
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.acceptSuggestionOnEnter": "on",
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.inlineSuggest.enabled": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false
+  },
   "ansible.validation.enabled": true,
   "ansible.validation.lint.enabled": false,
   "ansible.completion.provideModuleOptionAliases": true,
   "ansible.completion.provideRedirectModules": true,
   "ansible.python.interpreterPath": "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
+  "ansible.ansible.path": "/Library/Frameworks/Python.framework/Versions/3.11/bin/ansible",
+  "ansible.ansible.useFullyQualifiedCollectionNames": true,
+  "ansible.executionEnvironment.enabled": false,
+  "ansible.ansible.reuseTerminal": true,
+  "ansible.lightspeed.enabled": false,
+  "ansible.lightspeed.suggestions.enabled": false,
+  "ansible.mcpServer.enabled": false,
+  "yaml.validate": true,
+  "yaml.completion": true,
+  "yaml.hover": true,
+  "yaml.schemaStore.enable": true,
+  "yaml.customTags": [
+    "!vault",
+    "!encrypted/pkcs1-oaep"
+  ],
+  "vs-kubernetes.crd-code-completion": "enabled",
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform",
     "editor.formatOnSave": true,
@@ -91,42 +155,5 @@
   },
   "terraform.languageServer.enable": true,
   "terraform.experimentalFeatures.prefillRequiredFields": true,
-  "[yaml]": {
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
-    "editor.autoIndent": "advanced",
-    "editor.quickSuggestions": {
-      "other": "on",
-      "comments": "off",
-      "strings": "on"
-    },
-    "editor.wordBasedSuggestions": "matchingDocuments",
-    "editor.suggest.preview": false,
-    "editor.suggest.showSnippets": true,
-    "editor.snippetSuggestions": "inline",
-    "editor.suggestOnTriggerCharacters": true,
-    "editor.acceptSuggestionOnEnter": "on",
-    "editor.defaultFormatter": "redhat.vscode-yaml",
-    "editor.inlineSuggest.enabled": true,
-    "editor.suggest.snippetsPreventQuickSuggestions": false
-  },
-  "ansible.ansible.path": "/Library/Frameworks/Python.framework/Versions/3.11/bin/ansible",
-  "ansible.ansible.useFullyQualifiedCollectionNames": true,
-  "ansible.executionEnvironment.enabled": false,
-  "ansible.ansible.reuseTerminal": true,
-  "redhat.telemetry.enabled": false,
-  "yaml.validate": true,
-  "yaml.completion": true,
-  "yaml.hover": true,
-  "yaml.schemaStore.enable": true,
-  "yaml.customTags": [
-    "!vault",
-    "!encrypted/pkcs1-oaep"
-  ],
-  "ansible.validation.lint.autoFixOnSave": false,
-  "ansible.validation.lint.path": "ansible-lint",
-  "ansible.lightspeed.enabled": false,
-  "ansible.lightspeed.suggestions.enabled": false,
-  "ansible.mcpServer.enabled": false
+  "redhat.telemetry.enabled": false
 }

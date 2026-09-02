@@ -2,6 +2,7 @@
   "recommendations": [
     "hashicorp.terraform",
     "redhat.ansible",
-    "redhat.vscode-yaml"
+    "redhat.vscode-yaml",
+    "ms-kubernetes-tools.vscode-kubernetes-tools"
   ]
 }
