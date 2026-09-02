@@ -84,3 +84,12 @@ resource "aws_security_group_rule" "allow_https_ingress_worker" {
   security_group_id = aws_security_group.worker.id
   cidr_blocks       = [var.vpc_cidr]
 }
+
+resource "aws_security_group_rule" "allow_all_ingress_worker_to_worker" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  security_group_id        = aws_security_group.worker.id
+  source_security_group_id = aws_security_group.worker.id
+}
