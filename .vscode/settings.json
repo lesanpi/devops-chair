@@ -32,6 +32,10 @@
       "k8s/**/*.yml",
       "k8s/**/*.yaml"
     ],
+    "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json": [
+      "k8s/platform-infra/*.yml",
+      "k8s/platform-infra/*.yaml"
+    ],
     "https://json.schemastore.org/ansible-playbook": [
       "ansible/site.yml",
       "ansible/site.yaml",
