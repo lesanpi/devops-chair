@@ -67,5 +67,5 @@ resource "aws_iam_role_policy_attachment" "worker_policy" {
 
 resource "aws_iam_instance_profile" "worker_profile" {
   name = "${var.prefix_name}-worker-profile"
-  role = aws_iam_role.worker_role
+  role = aws_iam_role.worker_role.name
 }
