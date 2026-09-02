@@ -8,6 +8,6 @@
 
 - name: Install ArgoCD components
   ansible.builtin.command: |
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    kubectl apply -n argocd  --server-side -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
   environment:
     KUBECONFIG: /etc/kubernetes/admin.conf
