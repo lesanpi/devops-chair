@@ -8,6 +8,8 @@ data "aws_iam_policy_document" "ssm_policy" {
   }
 }
 
+# SSM Role
+
 resource "aws_iam_role" "ssm_role" {
   name               = "${var.prefix_name}-ssm-role"
   assume_role_policy = data.aws_iam_policy_document.ssm_policy.json
@@ -46,4 +48,24 @@ resource "aws_iam_role_policy" "ssm_s3_policy" {
       }
     ]
   })
+}
+
+
+# Worker Role
+
+resource "aws_iam_role" "worker_role" {
+  name               = "${var.prefix_name}-worker-role"
+  assume_role_policy = data.aws_iam_policy_document.ssm_policy.json
+
+}
+
+resource "aws_iam_role_policy_attachment" "worker_policy" {
+  role       = aws_iam_role.worker_role
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+}
+
+
+resource "aws_iam_instance_profile" "worker_profile" {
+  name = "${var.prefix_name}-worker-profile"
+  role = aws_iam_role.worker_role
 }

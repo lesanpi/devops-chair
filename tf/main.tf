@@ -45,7 +45,7 @@ module "workers" {
   instance_type             = "t3.small"
   node_role                 = "worker"
   instance_count            = 2
-  iam_instance_profile_name = module.security.ssm_instance_profile_name
+  iam_instance_profile_name = module.security.worker_instance_profile_role
   security_group_id         = module.security.worker_sg_id
   subnet_id                 = module.network.private_subnet_ids[1]
 }

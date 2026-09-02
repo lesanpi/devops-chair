@@ -9,3 +9,7 @@ output "control_plane_sg_id" {
 output "worker_sg_id" {
   value = aws_security_group.worker.id
 }
+
+output "worker_instance_profile_role" {
+  value = aws_iam_instance_profile.worker_profile.name
+}
