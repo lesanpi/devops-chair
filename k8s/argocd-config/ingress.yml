@@ -6,8 +6,13 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    cert-manager.io/cluster-issuer: "local-ca-issuer"
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - argocd.devops-chair.local
+      secretName: argocd-cert-tls
   rules:
     - host: argocd.devops-chair.local
       http:
