@@ -1,0 +1,158 @@
+{
+  "k8s-apiVersion-v1": {
+    "prefix": "apiVersion-v1",
+    "body": [
+      "apiVersion: v1",
+      "kind: ${1|ConfigMap,Secret,Service,Namespace,PersistentVolumeClaim|}",
+      "metadata:",
+      "  name: ${2:name}",
+      "$0"
+    ],
+    "description": "Kubernetes core v1 resource header",
+    "scope": "yaml"
+  },
+  "k8s-deployment": {
+    "prefix": "k8s-deployment",
+    "body": [
+      "apiVersion: apps/v1",
+      "kind: Deployment",
+      "metadata:",
+      "  name: ${1:name}",
+      "  namespace: ${2:default}",
+      "spec:",
+      "  replicas: ${3:1}",
+      "  selector:",
+      "    matchLabels:",
+      "      app: ${1:name}",
+      "  template:",
+      "    metadata:",
+      "      labels:",
+      "        app: ${1:name}",
+      "    spec:",
+      "      containers:",
+      "        - name: ${1:name}",
+      "          image: ${4:image:tag}",
+      "          ports:",
+      "            - containerPort: ${5:8080}",
+      "$0"
+    ],
+    "description": "Kubernetes Deployment",
+    "scope": "yaml"
+  },
+  "k8s-service": {
+    "prefix": "k8s-service",
+    "body": [
+      "apiVersion: v1",
+      "kind: Service",
+      "metadata:",
+      "  name: ${1:name}",
+      "  namespace: ${2:default}",
+      "spec:",
+      "  selector:",
+      "    app: ${3:app}",
+      "  ports:",
+      "    - port: ${4:80}",
+      "      targetPort: ${5:8080}",
+      "  type: ${6|ClusterIP,NodePort,LoadBalancer|}",
+      "$0"
+    ],
+    "description": "Kubernetes Service",
+    "scope": "yaml"
+  },
+  "k8s-ingress": {
+    "prefix": "k8s-ingress",
+    "body": [
+      "apiVersion: networking.k8s.io/v1",
+      "kind: Ingress",
+      "metadata:",
+      "  name: ${1:name}",
+      "  namespace: ${2:default}",
+      "  annotations:",
+      "    ${3:annotation}: ${4:value}",
+      "spec:",
+      "  ingressClassName: ${5:nginx}",
+      "  rules:",
+      "    - host: ${6:example.com}",
+      "      http:",
+      "        paths:",
+      "          - path: /",
+      "            pathType: Prefix",
+      "            backend:",
+      "              service:",
+      "                name: ${7:service}",
+      "                port:",
+      "                  number: ${8:80}",
+      "$0"
+    ],
+    "description": "Kubernetes Ingress",
+    "scope": "yaml"
+  },
+  "k8s-argocd-app": {
+    "prefix": "argocd-app",
+    "body": [
+      "apiVersion: argoproj.io/v1alpha1",
+      "kind: Application",
+      "metadata:",
+      "  name: ${1:app-name}",
+      "  namespace: argocd",
+      "spec:",
+      "  project: default",
+      "  source:",
+      "    repoURL: ${2:https://github.com/org/repo}",
+      "    targetRevision: ${3:HEAD}",
+      "    ${4|path,chart|}: ${5:path-or-chart}",
+      "  destination:",
+      "    server: https://kubernetes.default.svc",
+      "    namespace: ${6:default}",
+      "  syncPolicy:",
+      "    automated:",
+      "      prune: true",
+      "      selfHeal: true",
+      "$0"
+    ],
+    "description": "Argo CD Application",
+    "scope": "yaml"
+  },
+  "k8s-cert-manager-issuer": {
+    "prefix": "cert-issuer",
+    "body": [
+      "apiVersion: cert-manager.io/v1",
+      "kind: ClusterIssuer",
+      "metadata:",
+      "  name: ${1:letsencrypt-prod}",
+      "spec:",
+      "  acme:",
+      "    server: https://acme-v02.api.letsencrypt.org/directory",
+      "    email: ${2:admin@example.com}",
+      "    privateKeySecretRef:",
+      "      name: ${1:letsencrypt-prod}",
+      "    solvers:",
+      "      - http01:",
+      "          ingress:",
+      "            class: ${3:nginx}",
+      "$0"
+    ],
+    "description": "cert-manager ClusterIssuer (Let's Encrypt)",
+    "scope": "yaml"
+  },
+  "k8s-cert-manager-certificate": {
+    "prefix": "cert-certificate",
+    "body": [
+      "apiVersion: cert-manager.io/v1",
+      "kind: Certificate",
+      "metadata:",
+      "  name: ${1:tls-cert}",
+      "  namespace: ${2:default}",
+      "spec:",
+      "  secretName: ${3:tls-secret}",
+      "  issuerRef:",
+      "    name: ${4:letsencrypt-prod}",
+      "    kind: ClusterIssuer",
+      "  dnsNames:",
+      "    - ${5:example.com}",
+      "$0"
+    ],
+    "description": "cert-manager Certificate",
+    "scope": "yaml"
+  }
+}
