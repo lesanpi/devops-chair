@@ -35,3 +35,9 @@
   roles:
     - install_helm
     - install_ingress_nginx
+
+- name: 'Phase 6: Install ArgoCD'
+  hosts: role_control_plane
+  become: true
+  roles:
+    - install_argocd
