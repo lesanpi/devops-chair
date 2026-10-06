@@ -54,3 +54,16 @@ resource "aws_s3_bucket" "ssm_transfers" {
   bucket        = "devops-chair-ssm-transfers"
   force_destroy = true
 }
+
+
+module "github_oidc" {
+  source = "./modules/github_oidc"
+
+  prefix_name = "devops-chair"
+  subject_claims = [
+    "repo:lesanpi/devops-chair:*"
+  ]
+  policy_arns = [
+    "arn:aws:iam::aws:policy/AdministratorAccess"
+  ]
+}
