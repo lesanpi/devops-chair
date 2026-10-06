@@ -26,6 +26,12 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v4
 
+      - name: Validate Dynamic Inventory
+        working-directory: .
+        run: |
+          ansible-inventory -i ansible/inventory/aws_ec2.yml --graph
+          test -n "$(ansible-inventory -i ansible/inventory/aws_ec2.yml --list | python -c 'import json,sys; d=json.load(sys.stdin); print("".join(d.get("_meta",{}).get("hostvars",{})))')"
+
       - name: 'Configure Python'
         uses: actions/setup-python@v5
         with:
