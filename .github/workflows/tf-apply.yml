@@ -8,16 +8,14 @@ on:
         required: true
         default: 'no'
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: 'us-east-1'
-
 jobs:
   terraform-apply:
     name: 'Terraform Apply'
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.confirmacion == 'yes' }}
+    permissions:
+      id-token: write
+      contents: read
     defaults:
       run:
         working-directory: ./tf
@@ -25,6 +23,12 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v4
+
+      - name: 'Configure AWS Credentials'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::275061641109:role/devops-chair-github-actions
+          aws-region: us-east-1
 
       - name: 'Install Terraform'
         uses: hashicorp/setup-terraform@v3
