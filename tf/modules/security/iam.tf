@@ -64,6 +64,11 @@ resource "aws_iam_role_policy_attachment" "worker_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
 
+resource "aws_iam_role_policy_attachment" "worker_ssm" {
+  role       = aws_iam_role.worker_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
 
 resource "aws_iam_instance_profile" "worker_profile" {
   name = "${var.prefix_name}-worker-profile"
