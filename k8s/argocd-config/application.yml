@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/lesanpi/devops-chair.git
     targetRevision: main
-    path: k8s
+    path: k8s/argocd-config
     directory:
       recurse: true
   destination:
