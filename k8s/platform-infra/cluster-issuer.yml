@@ -2,6 +2,8 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: selfsigned-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   selfSigned: {}
 
@@ -11,6 +13,8 @@ kind: Certificate
 metadata:
   name: local-ca
   namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   isCA: true
   commonName: devops-chair-ca
@@ -24,6 +28,8 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: local-ca-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   ca:
     secretName: local-ca-secret

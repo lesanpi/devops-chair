@@ -12,9 +12,20 @@ spec:
   tls:
     - hosts:
         - argocd.devops-chair.local
+        - argocd-iamlesanpi.beops.app
       secretName: argocd-cert-tls
   rules:
     - host: argocd.devops-chair.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: https
+    - host: argocd-iamlesanpi.beops.app
       http:
         paths:
           - path: /

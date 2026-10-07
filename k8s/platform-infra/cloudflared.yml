@@ -21,13 +21,9 @@ spec:
       containers:
         - name: cloudflared
           image: cloudflare/cloudflared:latest
-          args:
-            - tunnel
-            - run
-            - --token
-            - $CLOUDFLARED_TOKEN
+          args: [tunnel, run]
           env:
-            - name: CLOUDFLARED_TOKEN
+            - name: TUNNEL_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: cloudflared-token
