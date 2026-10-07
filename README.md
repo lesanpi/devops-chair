@@ -8,17 +8,17 @@ Terraform builds the network and the instances. Ansible installs the cluster and
 
 Region `us-east-1`. VPC `10.0.0.0/16`.
 
-| Piece | Placement | Role |
-| --- | --- | --- |
-| Public subnets | `10.0.1.0/24` (1a), `10.0.2.0/24` (1b) | NAT instance only |
-| Private subnets | `10.0.10.0/24` (1a), `10.0.11.0/24` (1b) | Nodes |
-| NAT | `t4g.nano` plus an EIP in the public subnet | Egress. Not a NAT Gateway |
-| Control plane | 1× `t3.medium`, private | kubeadm. Tag `Role=control-plane` |
-| Workers | 2× `t3.small`, private | Tag `Role=worker` |
-| Access | SSM | No public SSH, no public IP on nodes |
-| Ingress | ingress-nginx, Helm, `hostNetwork`, DaemonSet | 80/443 from the VPC CIDR only |
-| GitOps | Argo CD | Upstream install manifest |
-| State | S3 `devops-chair-terraform` | Created before `terraform init` |
+| Piece           | Placement                                     | Role                                 |
+| --------------- | --------------------------------------------- | ------------------------------------ |
+| Public subnets  | `10.0.1.0/24` (1a), `10.0.2.0/24` (1b)        | NAT instance only                    |
+| Private subnets | `10.0.10.0/24` (1a), `10.0.11.0/24` (1b)      | Nodes                                |
+| NAT             | `t4g.nano` plus an EIP in the public subnet   | Egress. Not a NAT Gateway            |
+| Control plane   | 1× `t3.medium`, private                       | kubeadm. Tag `Role=control-plane`    |
+| Workers         | 2× `t3.small`, private                        | Tag `Role=worker`                    |
+| Access          | SSM                                           | No public SSH, no public IP on nodes |
+| Ingress         | ingress-nginx, Helm, `hostNetwork`, DaemonSet | 80/443 from the VPC CIDR only        |
+| GitOps          | Argo CD                                       | Upstream install manifest            |
+| State           | S3 `devops-chair-terraform`                   | Created before `terraform init`      |
 
 Network, security groups, and install phases: [docs/architecture.md](docs/architecture.md).
 
@@ -116,11 +116,11 @@ Modules and workflows: [docs/terraform.md](docs/terraform.md).
 
 Repository secrets: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`. Region is fixed to `us-east-1`.
 
-| Workflow | Trigger | Steps |
-| --- | --- | --- |
-| `tf-plan.yml` | Pull request or push to `main` that touches `tf/**` | `init`, `fmt -check`, `plan` |
-| `tf-apply.yml` | `workflow_dispatch`, input `confirmacion` = `yes` | `init`, `apply -auto-approve` |
-| `tf-destroy.yml` | `workflow_dispatch`, input `confirmacion` = `yes` | `init`, `destroy -auto-approve` |
+| Workflow         | Trigger                                             | Steps                           |
+| ---------------- | --------------------------------------------------- | ------------------------------- |
+| `tf-plan.yml`    | Pull request or push to `main` that touches `tf/**` | `init`, `fmt -check`, `plan`    |
+| `tf-apply.yml`   | `workflow_dispatch`, input `confirmacion` = `yes`   | `init`, `apply -auto-approve`   |
+| `tf-destroy.yml` | `workflow_dispatch`, input `confirmacion` = `yes`   | `init`, `destroy -auto-approve` |
 
 Any other value of `confirmacion` skips the job. The apply workflow does not run Ansible.
 
@@ -157,6 +157,47 @@ ansible-playbook site.yml
 `.github/workflows/ansible.yml` is `workflow_dispatch` with the same `yes` gate. It installs Ansible, boto3, `amazon.aws`, and the Session Manager plugin, prints the inventory, and runs `site.yml`.
 
 Roles and inventory: [docs/ansible.md](docs/ansible.md).
+
+## SSM tunnel and local kubectl
+
+The API server listens on the control plane, port 6443, and that port is open only from the VPC. A workstation reaches it through an SSM port-forward. The session has to stay open. Closing it drops `kubectl`.
+
+Required locally: AWS CLI v2, the Session Manager plugin, `kubectl`, `perl`, and Ansible with the `amazon.aws` collection. The caller needs `ssm:StartSession` on the control-plane instance and `ec2:DescribeInstances`.
+
+```bash
+aws sts get-caller-identity
+session-manager-plugin --version
+export AWS_REGION=us-east-1
+export AWS_DEFAULT_REGION=us-east-1
+```
+
+The control plane has to be `Online` in Systems Manager. `make tunnel` looks it up by the tag `Role=control-plane`.
+
+Terminal A, from the repo root. Leave it running:
+
+```bash
+make tunnel
+```
+
+That is `aws ssm start-session` with `AWS-StartPortForwardingSession`, remote port 6443, local port 6443.
+
+Terminal B, from the repo root:
+
+```bash
+make fetch-kubeconfig
+export KUBECONFIG="$PWD/kubeconfig_aws"
+kubectl get nodes
+```
+
+`fetch-kubeconfig` copies `/home/ubuntu/.kube/config` from the control plane over SSM, rewrites the server to `https://127.0.0.1:6443`, and sets `insecure-skip-tls-verify: true`. The file holds the `kubernetes-admin` client certificate and key. It stays on the workstation. Do not commit it.
+
+A new shell needs the same export:
+
+```bash
+export KUBECONFIG="$PWD/kubeconfig_aws"
+```
+
+`kubectl` fails with a connection error when terminal A is closed, and with a certificate error if `KUBECONFIG` still points at a config whose server is the private IP. Repeat `make fetch-kubeconfig` only when the admin kubeconfig on the node has changed.
 
 ## Argo CD
 

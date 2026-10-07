@@ -6,7 +6,7 @@ WORKER_ID=$(shell aws ec2 describe-instances --filters "Name=tag:Role,Values=wor
 
 fetch-kubeconfig:
 	@echo "📦 Descargando kubeconfig desde el clúster usando nuestro túnel Ansible..."
-	cd ansible && ansible role_control_plane -m fetch -a "src=/home/ubuntu/.kube/config dest=../kubeconfig_aws flat=yes" -b
+	cd ansible && ansible role_control_plane -m fetch -i inventory/aws_ec2.yml -a "src=/home/ubuntu/.kube/config dest=../kubeconfig_aws flat=yes" -b
 	@echo "🔧 Re-escribiendo el endpoint a localhost (Zero-Trust)..."
 	@perl -pi -e 's/server: https:\/\/[0-9.]*:6443/server: https:\/\/127.0.0.1:6443/g' kubeconfig_aws
 	@perl -pi -e 's/certificate-authority-data: .*/insecure-skip-tls-verify: true/g' kubeconfig_aws
