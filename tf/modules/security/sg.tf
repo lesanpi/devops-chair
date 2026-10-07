@@ -31,7 +31,7 @@ resource "aws_security_group_rule" "control_plane_ingress" {
 }
 resource "aws_security_group_rule" "worker_egress" {
   from_port         = 0
-  protocol          = "tcp"
+  protocol          = "-1"
   security_group_id = aws_security_group.worker.id
   to_port           = 0
   cidr_blocks       = ["0.0.0.0/0"]
@@ -40,7 +40,7 @@ resource "aws_security_group_rule" "worker_egress" {
 
 resource "aws_security_group_rule" "control_plane_egress" {
   from_port         = 0
-  protocol          = "tcp"
+  protocol          = "-1"
   security_group_id = aws_security_group.control_plane.id
   to_port           = 0
   cidr_blocks       = ["0.0.0.0/0"]
