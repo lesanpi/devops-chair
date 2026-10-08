@@ -19,11 +19,23 @@ module "nat" {
   depends_on                = [module.network]
 }
 
+
+module "s3" {
+  source      = "./modules/s3"
+  bucket_name = "devops-chair-registry"
+  region      = "us-east-1"
+  tags = {
+    Name = "devops-chair-registry"
+  }
+}
+
+
 module "security" {
-  source      = "./modules/security"
-  prefix_name = "devops-chair"
-  vpc_id      = module.network.vpc_id
-  vpc_cidr    = module.network.vpc_cidr
+  source               = "./modules/security"
+  prefix_name          = "devops-chair"
+  registry_bucket_name = module.s3.bucket_name
+  vpc_id               = module.network.vpc_id
+  vpc_cidr             = module.network.vpc_cidr
 }
 
 module "control_plane" {

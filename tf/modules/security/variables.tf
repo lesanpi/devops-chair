@@ -14,3 +14,9 @@ variable "vpc_cidr" {
   description = "The CIDR block for the VPC"
   type        = string
 }
+
+
+variable "registry_bucket_name" {
+  description = "The name of the registry bucket"
+  type        = string
+}
