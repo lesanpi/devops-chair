@@ -87,7 +87,7 @@ resource "aws_iam_role_policy" "worker_s3_registry_get" {
 
 resource "aws_iam_role_policy" "worker_pull_ecr_get" {
   name = "worker-ecr-get"
-  role = aws_iam_role.worker_role
+  role = aws_iam_role.worker_role.id
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
