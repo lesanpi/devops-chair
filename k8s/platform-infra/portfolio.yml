@@ -18,6 +18,8 @@ spec:
       labels:
         app: portfolio
     spec:
+      imagePullSecrets:
+        - name: ecr-pull
       containers:
         - name: portfolio
           image: 275061641109.dkr.ecr.us-east-1.amazonaws.com/devops-chair/portfolio:aacc104
