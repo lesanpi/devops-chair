@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #070908;
+  --color-surface: #101412;
+  --color-fg: #d7e0d4;
+  --color-muted: #8b9784;
+  --color-primary: #b6ff3c;
+  --color-border: #243028;
+  --font-sans: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-bg);
+  }
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 48px;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.grid-field {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-border) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 70%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: drift 18s linear infinite;
+}
+
+.caret {
+  animation: caret 1s steps(1) infinite;
+}
+
+.rise {
+  animation: rise 0.6s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .grid-field,
+  .caret,
+  .rise {
+    animation: none;
+  }
+}

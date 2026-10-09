@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+.node_modules.lock
+
+# Build output (Vite / Nitro / Vercel adapter)
+.vercel/
+.output/
+.nitro/
+dist/
+.tanstack/
+
+# Grok app-builder workspace state (logs, pid, skills, app env)
+# scripts/with-app-env.mjs falls back to {} when .grok/app-env.json is absent
+.grok/
+
+# Personal documents and generated assets — not app source
+artifacts/
+attachments/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Playwright
+test-results/
+playwright-report/
+
+# Logs
+*.log
+npm-debug.log*

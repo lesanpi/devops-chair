@@ -79,3 +79,8 @@ module "github_oidc" {
     "arn:aws:iam::aws:policy/AdministratorAccess"
   ]
 }
+
+module "ecr_portfolio" {
+  source          = "./modules/ecr"
+  repository_name = "devops-chair/portfolio"
+}

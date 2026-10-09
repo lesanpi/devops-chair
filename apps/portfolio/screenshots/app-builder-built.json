@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Luis Enrique Sánchez — Platform",
+      "hasCanvas": false,
+      "bodyTextLen": 4120,
+      "bodyTextHash": "6bc84295d8d45ce7060082a44b052479880962040f1589b6ba40b21341634688",
+      "bodyTextPrefix": "EN ES lesanpi Work Projects Stack Contact platform · devops · pr",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Luis Enrique Sánchez — Platform",
+      "hasCanvas": false,
+      "bodyTextLen": 4120,
+      "bodyTextHash": "6bc84295d8d45ce7060082a44b052479880962040f1589b6ba40b21341634688",
+      "bodyTextPrefix": "EN ES lesanpi Work Projects Stack Contact platform · devops · pr",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

@@ -1,0 +1,82 @@
+name: Portfolio image
+
+on:
+  pull_request:
+    paths:
+      - apps/portfolio/**
+      - .github/workflows/portfolio.yml
+  push:
+    branches:
+      - main
+    paths:
+      - apps/portfolio/**
+      - .github/workflows/portfolio.yml
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: devops-chair/portfolio
+
+jobs:
+  image:
+    name: Build, scan, publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trivy dependency scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: apps/portfolio
+          scanners: vuln
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: apps/portfolio
+          file: apps/portfolio/Dockerfile
+          load: true
+          push: false
+          tags: portfolio:scan
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Trivy image scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: portfolio:scan
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+
+      - name: Configure AWS credentials
+        if: github.event_name != 'pull_request'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::275061641109:role/devops-chair-github-actions
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        if: github.event_name != 'pull_request'
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Publish
+        if: github.event_name != 'pull_request'
+        run: |
+          set -eu
+          registry="${{ steps.ecr.outputs.registry }}"
+          sha="${GITHUB_SHA::7}"
+          docker tag portfolio:scan "$registry/$ECR_REPOSITORY:$sha"
+          docker tag portfolio:scan "$registry/$ECR_REPOSITORY:latest"
+          docker push "$registry/$ECR_REPOSITORY:$sha"
+          docker push "$registry/$ECR_REPOSITORY:latest"
