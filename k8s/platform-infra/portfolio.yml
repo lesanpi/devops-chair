@@ -7,7 +7,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: portfolio
-  namespace: default
+  namespace: portfolio
 spec:
   replicas: 1
   selector:
