@@ -85,6 +85,39 @@ resource "aws_iam_role_policy" "worker_s3_registry_get" {
   })
 }
 
+resource "aws_iam_role_policy" "worker_pull_ecr_get" {
+  name = "worker-ecr-get"
+  role = aws_iam_role.worker_role
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        "Sid" : "EcrAuth",
+        "Effect" : "Allow",
+        "Action" : "ecr:GetAuthorizationToken",
+        "Resource" : "*"
+      },
+      {
+        "Sid" : "EcrDevopsChair",
+        "Effect" : "Allow",
+        "Action" : [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
+          "ecr:CompleteLayerUpload",
+          "ecr:DescribeImages",
+          "ecr:DescribeRepositories",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:InitiateLayerUpload",
+          "ecr:ListImages",
+          "ecr:PutImage",
+          "ecr:UploadLayerPart"
+        ],
+        "Resource" : "arn:aws:ecr:us-east-1:275061641109:devops-chair/*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "worker_policy" {
   role       = aws_iam_role.worker_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
