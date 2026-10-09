@@ -1,4 +1,4 @@
-name: Portfolio image
+name: CICD Portfolio
 
 on:
   pull_request:
