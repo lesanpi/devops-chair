@@ -24,6 +24,13 @@ data "aws_iam_policy_document" "github_assume" {
       values   = ["sts.amazonaws.com"]
     }
 
+    # AWS requires sub (or job_workflow_ref) scoped to a repo, not "*".
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = [for repo in var.allowed_repositories : "repo:${repo}:*"]
+    }
+
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:repository"
