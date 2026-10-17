@@ -112,7 +112,7 @@ resource "aws_iam_role_policy" "worker_pull_ecr_get" {
           "ecr:PutImage",
           "ecr:UploadLayerPart"
         ],
-        "Resource" : "arn:aws:ecr:us-east-1:275061641109:devops-chair/*"
+        "Resource" : "arn:aws:ecr:us-east-1:275061641109:repository/devops-chair/*"
       }
     ]
   })

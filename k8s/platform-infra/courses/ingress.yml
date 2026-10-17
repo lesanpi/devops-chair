@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: courses
+  namespace: courses
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: courses-iamlesanpi.beops.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: courses-frontend
+                port:
+                  number: 80
+    - host: courses-api-iamlesanpi.beops.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: courses-api
+                port:
+                  number: 80

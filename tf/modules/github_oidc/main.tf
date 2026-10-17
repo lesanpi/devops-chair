@@ -10,6 +10,7 @@ resource "aws_iam_openid_connect_provider" "github" {
 
 data "aws_iam_policy_document" "github_assume" {
   statement {
+    sid     = "GitHubActionsOidc"
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
@@ -24,9 +25,9 @@ data "aws_iam_policy_document" "github_assume" {
     }
 
     condition {
-      test     = "StringLike"
-      variable = "token.actions.githubusercontent.com:sub"
-      values   = var.subject_claims
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:repository"
+      values   = var.allowed_repositories
     }
   }
 }

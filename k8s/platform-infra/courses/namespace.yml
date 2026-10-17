@@ -1,0 +1,8 @@
+# Copy the ecr-pull secret from portfolio (or recreate it) into this namespace:
+# kubectl get secret ecr-pull -n portfolio -o yaml | sed 's/namespace: portfolio/namespace: courses/' | kubectl apply -f -
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: courses
+  labels:
+    app.kubernetes.io/part-of: courses

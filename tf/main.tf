@@ -72,12 +72,9 @@ module "github_oidc" {
   source = "./modules/github_oidc"
 
   prefix_name = "devops-chair"
-  subject_claims = [
-    "repo:lesanpi/devops-chair:*",
-    "repo:lesanpi@42817881/devops-chair@1350636462:*",
-    "repo:lesanpi/course-platform:*",
-    "repo:lesanpi@42817881/course-platform@1350636462:*"
-
+  allowed_repositories = [
+    "lesanpi/devops-chair",
+    "lesanpi/course-platform",
   ]
   policy_arns = [
     "arn:aws:iam::aws:policy/AdministratorAccess"

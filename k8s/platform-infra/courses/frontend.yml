@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: courses-frontend
+  namespace: courses
+  labels:
+    app: courses-frontend
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: courses-frontend
+  template:
+    metadata:
+      labels:
+        app: courses-frontend
+    spec:
+      imagePullSecrets:
+        - name: ecr-pull
+      containers:
+        - name: courses-frontend
+          image: 275061641109.dkr.ecr.us-east-1.amazonaws.com/devops-chair/courses-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: NEXT_PUBLIC_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: courses-config
+                  key: NEXT_PUBLIC_API_URL
+          readinessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: courses-frontend
+  namespace: courses
+spec:
+  selector:
+    app: courses-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000

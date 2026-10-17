@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: courses-config
+  namespace: courses
+data:
+  API_PORT: "3001"
+  WEB_ORIGIN: "https://courses-iamlesanpi.beops.app"
+  GOOGLE_CALLBACK_URL: "https://courses-api-iamlesanpi.beops.app/auth/google/callback"
+  NEXT_PUBLIC_API_URL: "https://courses-api-iamlesanpi.beops.app"
