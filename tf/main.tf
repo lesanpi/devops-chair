@@ -82,7 +82,26 @@ module "github_oidc" {
   ]
 }
 
+module "github_oidc_courses" {
+  source = "./modules/github_oidc"
+
+  prefix_name = "course-platform"
+  subject_claims = [
+    "repo:lesanpi/course-platform:*",
+    "repo:lesanpi@42817881/course-platform@1350636462:*"
+
+  ]
+  policy_arns = [
+    "arn:aws:iam::aws:policy/AdministratorAccess"
+  ]
+}
+
 module "ecr_portfolio" {
   source          = "./modules/ecr"
   repository_name = "devops-chair/portfolio"
+}
+
+module "ecr_courses" {
+  source          = "./modules/ecr"
+  repository_name = "devops-chair/courses"
 }
