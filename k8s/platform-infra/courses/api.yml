@@ -38,6 +38,9 @@ spec:
                 name: courses-config
             - secretRef:
                 name: courses-api
+            - secretRef:
+                name: courses-google
+                optional: true
           readinessProbe:
             tcpSocket:
               port: 3001

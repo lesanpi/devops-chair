@@ -8,6 +8,19 @@ resource "aws_iam_openid_connect_provider" "github" {
   thumbprint_list = [data.tls_certificate.github.certificates[0].sha1_fingerprint]
 }
 
+locals {
+  # Classic: repo:owner/name:*
+  # Immutable (GitHub default for repos created after 2026-07-15):
+  #   repo:owner@OWNER_ID/name@REPO_ID:ref:...
+  # Wildcard the repo id so we do not have to hardcode private-repo ids.
+  oidc_sub_claims = distinct(flatten([
+    for repo in var.allowed_repositories : [
+      "repo:${repo}:*",
+      "repo:${split("/", repo)[0]}@${var.github_owner_id}/${split("/", repo)[1]}@*",
+    ]
+  ]))
+}
+
 data "aws_iam_policy_document" "github_assume" {
   statement {
     sid     = "GitHubActionsOidc"
@@ -24,17 +37,10 @@ data "aws_iam_policy_document" "github_assume" {
       values   = ["sts.amazonaws.com"]
     }
 
-    # AWS requires sub (or job_workflow_ref) scoped to a repo, not "*".
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = [for repo in var.allowed_repositories : "repo:${repo}:*"]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "token.actions.githubusercontent.com:repository"
-      values   = var.allowed_repositories
+      values   = local.oidc_sub_claims
     }
   }
 }

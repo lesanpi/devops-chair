@@ -14,6 +14,12 @@ resource "aws_instance" "node" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [var.security_group_id]
   iam_instance_profile   = var.iam_instance_profile_name
+  root_block_device {
+    volume_size           = var.root_volume_size
+    volume_type           = var.root_volume_type
+    encrypted             = false
+    delete_on_termination = true
+  }
   tags = merge(
     {
       Name = var.instance_count > 1 ? "${var.cluster_name}-${var.node_role}-${count.index + 1}" : "${var.cluster_name}-${var.node_role}"

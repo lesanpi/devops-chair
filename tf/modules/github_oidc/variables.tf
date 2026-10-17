@@ -4,14 +4,13 @@ variable "prefix_name" {
 }
 
 variable "allowed_repositories" {
-  description = "GitHub repositories allowed to assume the role, as owner/name. Matches the OIDC repository claim."
+  description = "GitHub repositories allowed to assume the role, as owner/name."
   type        = list(string)
 }
 
-variable "subject_claims" {
-  description = "Optional extra GitHub OIDC sub patterns (repo:owner/name:*). Empty uses repository claim only."
-  type        = list(string)
-  default     = []
+variable "github_owner_id" {
+  description = "Numeric GitHub user/org id for immutable OIDC subject claims (repos created after 2026-07-15)."
+  type        = string
 }
 
 variable "policy_arns" {

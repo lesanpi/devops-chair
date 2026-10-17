@@ -57,6 +57,7 @@ module "workers" {
   instance_type             = "t3.small"
   node_role                 = "worker"
   instance_count            = 2
+  root_volume_size          = 20
   iam_instance_profile_name = module.security.worker_instance_profile_role
   security_group_id         = module.security.worker_sg_id
   subnet_id                 = module.network.private_subnet_ids[1]
@@ -71,7 +72,8 @@ resource "aws_s3_bucket" "ssm_transfers" {
 module "github_oidc" {
   source = "./modules/github_oidc"
 
-  prefix_name = "devops-chair"
+  prefix_name     = "devops-chair"
+  github_owner_id = "42817881"
   allowed_repositories = [
     "lesanpi/devops-chair",
     "lesanpi/course-platform",

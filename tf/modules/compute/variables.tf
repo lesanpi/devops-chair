@@ -45,3 +45,15 @@ variable "extra_tags" {
   description = "Mapa de etiquetas adicionales (Obligatorio incluir la llave 'Role' para Ansible)"
   default     = {}
 }
+
+variable "root_volume_size" {
+  description = "Root EBS volume size in GiB"
+  type        = number
+  default     = 8
+}
+
+variable "root_volume_type" {
+  description = "Root EBS volume type"
+  type        = string
+  default     = "gp3"
+}

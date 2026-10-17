@@ -237,6 +237,37 @@ kubectl -n argocd get secret argocd-initial-admin-secret \
 
 Install path, UI, and the Ingress manifest: [docs/argocd.md](docs/argocd.md).
 
+## ECR image pull
+
+Workloads in `portfolio` and `courses` pull from ECR (`devops-chair/portfolio`, `devops-chair/courses-api`, `devops-chair/courses-frontend`). The worker instance profile can call ECR, but kubeadm does not use that role for image pulls. Deployments reference `imagePullSecrets: ecr-pull`, which is not in git.
+
+The Docker login token from ECR lasts 12 hours. Recreate the Secret when pulls fail with `no basic auth credentials`.
+
+With the SSM tunnel open, from the repo root:
+
+```bash
+export KUBECONFIG="$PWD/kubeconfig_aws"
+set -a
+source .env
+set +a
+
+kubectl create namespace portfolio --dry-run=client -o yaml | kubectl apply -f -
+kubectl create namespace courses --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl create secret docker-registry ecr-pull \
+  --namespace portfolio \
+  --docker-server=275061641109.dkr.ecr.us-east-1.amazonaws.com \
+  --docker-username=AWS \
+  --docker-password="$(aws ecr get-login-password --region us-east-1)" \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl get secret ecr-pull -n portfolio -o yaml \
+  | sed 's/namespace: portfolio/namespace: courses/' \
+  | kubectl apply -f -
+
+kubectl rollout restart deployment/portfolio -n portfolio
+```
+
 ## Bring-up order
 
 1. AWS credentials in the shell, or the two repository secrets.
@@ -245,5 +276,6 @@ Install path, UI, and the Ingress manifest: [docs/argocd.md](docs/argocd.md).
 4. SSM `Online` on all four instances.
 5. `ansible-playbook site.yml`.
 6. `make tunnel` and `make fetch-kubeconfig`.
+7. Create `ecr-pull` in `portfolio` and `courses` (see [ECR image pull](#ecr-image-pull)).
 
 `terraform destroy` removes the infrastructure. There is no Ansible teardown playbook.
