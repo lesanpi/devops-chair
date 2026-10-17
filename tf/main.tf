@@ -74,19 +74,7 @@ module "github_oidc" {
   prefix_name = "devops-chair"
   subject_claims = [
     "repo:lesanpi/devops-chair:*",
-    "repo:lesanpi@42817881/devops-chair@1350636462:*"
-
-  ]
-  policy_arns = [
-    "arn:aws:iam::aws:policy/AdministratorAccess"
-  ]
-}
-
-module "github_oidc_courses" {
-  source = "./modules/github_oidc"
-
-  prefix_name = "course-platform"
-  subject_claims = [
+    "repo:lesanpi@42817881/devops-chair@1350636462:*",
     "repo:lesanpi/course-platform:*",
     "repo:lesanpi@42817881/course-platform@1350636462:*"
 
@@ -101,7 +89,12 @@ module "ecr_portfolio" {
   repository_name = "devops-chair/portfolio"
 }
 
-module "ecr_courses" {
+module "ecr_courses_api" {
   source          = "./modules/ecr"
-  repository_name = "devops-chair/courses"
+  repository_name = "devops-chair/courses-api"
+}
+
+module "ecr_courses_frontend" {
+  source          = "./modules/ecr"
+  repository_name = "devops-chair/courses-frontend"
 }

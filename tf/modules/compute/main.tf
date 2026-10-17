@@ -21,4 +21,7 @@ resource "aws_instance" "node" {
     },
     var.extra_tags
   )
+  lifecycle {
+    ignore_changes = [ami]
+  }
 }
